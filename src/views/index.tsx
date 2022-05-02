@@ -22,7 +22,6 @@ const Root = () => (
   <Layout>
     <Routes>
       <Route
-        index
         path='login'
         element={
           <GuestRoute>

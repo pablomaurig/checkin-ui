@@ -1,4 +1,4 @@
-import { useDisclosure } from '@chakra-ui/react';
+import { Container, useDisclosure } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import Header from '../Header';
 import Nav from '../Nav';
@@ -17,7 +17,11 @@ const Layout = ({ children }: React.PropsWithChildren<React.ReactNode>) => {
     <div className='App'>
       <Header isOpen={isOpen} onOpen={onOpen} />
       <Nav isOpen={isOpen} onClose={onClose} />
-      <main>{children}</main>
+      <main>
+        <Container maxW='container.lg' pt={6}>
+          {children}
+        </Container>
+      </main>
     </div>
   );
 };
