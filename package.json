@@ -1,7 +1,7 @@
 {
   "name": "checkin-ui",
   "version": "0.1.0",
-  "homepage": "https://pablomaurig.github.io/checkin-ui/",
+  "homepage": "https://pablomaurig.github.io/checkin-ui",
   "private": true,
   "scripts": {
     "predeploy": "npm run build",
