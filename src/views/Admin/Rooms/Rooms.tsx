@@ -14,6 +14,7 @@ import PageTitle from '../../../components/PageTitle';
 import { MdDelete, MdOutlineListAlt } from 'react-icons/md';
 import AlertDialog from '../../../components/AlertDialog/AlertDialog';
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const HABITACIONES = [
   {
@@ -78,6 +79,9 @@ const Rooms = () => {
   return (
     <>
       <PageTitle label='Habitaciones' />
+      <Button as={NavLink} to={'crear'}>
+        Crear habitación
+      </Button>
       <TableContainer>
         <Table size='sm'>
           <Thead>
