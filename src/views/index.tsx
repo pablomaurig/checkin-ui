@@ -22,7 +22,7 @@ const Root = () => (
   <Layout>
     <Routes>
       <Route
-        path='login'
+        path='/login'
         element={
           <GuestRoute>
             <Login />
@@ -30,7 +30,7 @@ const Root = () => (
         }
       />
       <Route
-        path='registro'
+        path='/registro'
         element={
           <GuestRoute>
             <Register />
@@ -46,7 +46,7 @@ const Root = () => (
         }
       />
       <Route
-        path='checkin'
+        path='/checkin'
         element={
           <RequireAuth>
             <Checkin />
@@ -54,7 +54,7 @@ const Root = () => (
         }
       />
       <Route
-        path='informacion-del-hotel'
+        path='/informacion-del-hotel'
         element={
           <RequireAuth>
             <Hotel />
@@ -62,7 +62,7 @@ const Root = () => (
         }
       />
       <Route
-        path='configuracion'
+        path='/configuracion'
         element={
           <RequireAuth>
             <Configuration />
@@ -70,7 +70,7 @@ const Root = () => (
         }
       />
       <Route
-        path='admin'
+        path='/admin'
         element={
           <RequireAuth>
             <RouteWithPermissions
@@ -82,19 +82,19 @@ const Root = () => (
           </RequireAuth>
         }
       >
-        <Route path='encuestas' element={<Surveys />} />
-        <Route path='reservas' element={<Bookings />} />
-        <Route path='reservas/crear' element={<Bookings />} />
-        <Route path='reservas/:id' element={<Bookings />} />
-        <Route path='habitaciones' element={<Rooms />} />
-        <Route path='habitaciones/crear' element={<RoomsCreate />} />
-        <Route path='habitaciones/:id' element={<Rooms />} />
-        <Route path='empleados' element={<Employees />} />
-        <Route path='empleados/crear' element={<Employees />} />
-        <Route path='empleados/:id' element={<Employees />} />
+        <Route path='/encuestas' element={<Surveys />} />
+        <Route path='/reservas' element={<Bookings />} />
+        <Route path='/reservas/crear' element={<Bookings />} />
+        <Route path='/reservas/:id' element={<Bookings />} />
+        <Route path='/habitaciones' element={<Rooms />} />
+        <Route path='/habitaciones/crear' element={<RoomsCreate />} />
+        <Route path='/habitaciones/:id' element={<Rooms />} />
+        <Route path='/empleados' element={<Employees />} />
+        <Route path='/empleados/crear' element={<Employees />} />
+        <Route path='/empleados/:id' element={<Employees />} />
       </Route>
       <Route
-        path='admin/login'
+        path='/admin/login'
         element={
           <GuestRoute>
             <Login />
