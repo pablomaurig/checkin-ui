@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/checkin-ui/static/css/main.71ab1b6a.css",
+    "main.css": "/checkin-ui/static/css/main.6b03c67d.css",
     "main.js": "/checkin-ui/static/js/main.24d672ce.js",
     "index.html": "/checkin-ui/index.html",
-    "main.71ab1b6a.css.map": "/checkin-ui/static/css/main.71ab1b6a.css.map",
+    "main.6b03c67d.css.map": "/checkin-ui/static/css/main.6b03c67d.css.map",
     "main.24d672ce.js.map": "/checkin-ui/static/js/main.24d672ce.js.map"
   },
   "entrypoints": [
-    "static/css/main.71ab1b6a.css",
+    "static/css/main.6b03c67d.css",
     "static/js/main.24d672ce.js"
   ]
 }
