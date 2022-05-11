@@ -5,5 +5,6 @@ export enum BookingState {
   Created,
   Approved,
   Checked,
+  Active,
   Finalized,
 }
