@@ -46,6 +46,14 @@ const Root = () => (
         }
       />
       <Route
+        path='checkin-ui'
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
+      <Route
         path='checkin'
         element={
           <RequireAuth>
