@@ -6,31 +6,32 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  Link,
+  Link
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import PageTitle from '../../../components/PageTitle';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
-const CreateEmployeeSchema = Yup.object().shape({
-  firstName: Yup.string().required('Este campo es requerido'),
-  lastName: Yup.string().required('Este campo es requerido'),
+
+
+const EmployeeViewEditSchema = Yup.object().shape({
   email: Yup.string().required('Este campo es requerido'),
   password: Yup.string().required('Este campo es requerido'),
   repeatPassword: Yup.string().required('Este campo es requerido').oneOf([Yup.ref('password'), null], 'Las password no coinciden'),
 });
 
 
-const EmployeesCreate = () => {
+const EmployeeViewEdit = () => {
+  const { id } = useParams();
   return (
     <Formik
       initialValues={{
-        firstName: '',
+        firstName: id,
         lastName: '',
         email: '',
         password: '',
       }}
-      validationSchema={CreateEmployeeSchema}
+      validationSchema={EmployeeViewEditSchema}
       onSubmit={(values, actions) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
@@ -40,7 +41,7 @@ const EmployeesCreate = () => {
     >
       {props => (
         <Form>
-          <PageTitle label='Alta de empleado' />
+          <PageTitle label='Información del empleado' />
           <Field name='firstName'>
             {({ field, form }: any) => (
               <FormControl
@@ -48,7 +49,7 @@ const EmployeesCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='firstName'>Nombre</FormLabel>
-                <Input {...field} id='firstName' />
+                <Input {...field} id='firstName' disabled = {true}/>
                 <FormErrorMessage>{form.errors.firstName}</FormErrorMessage>
               </FormControl>
             )}
@@ -60,7 +61,7 @@ const EmployeesCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='lastName'>Apellido</FormLabel>
-                <Input {...field} id='lastName' />
+                <Input {...field} id='lastName' disabled = {true}/>
                 <FormErrorMessage>{form.errors.lastName}</FormErrorMessage>
               </FormControl>
             )}
@@ -115,4 +116,4 @@ const EmployeesCreate = () => {
   );
 };
 
-export default EmployeesCreate;
+export default EmployeeViewEdit;

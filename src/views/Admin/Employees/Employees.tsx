@@ -97,7 +97,13 @@ import {
                     >
                       <Icon as={MdDelete} />
                     </Button>
-                    <Button ml={'2'} px={2} rounded={'full'}>
+                    <Button 
+                      as={NavLink} 
+                      to={`${employee.id}`}
+                      ml={'2'} 
+                      px={2} 
+                      rounded={'full'}
+                    >
                       <Icon as={MdOutlineListAlt} />
                     </Button>
                   </Td>
