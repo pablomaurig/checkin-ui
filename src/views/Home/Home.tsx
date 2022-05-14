@@ -138,7 +138,7 @@ const RequestBookingSchema = Yup.object().shape({
 });
 
 const Home = () => {
-  const [bookingState, setBookingState] = useState(BookingState.Active);
+  const [bookingState, setBookingState] = useState(BookingState.Initial);
   const [surveyStep, setSurveyStep] = useState(0);
   const [lastName, setLastName] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
