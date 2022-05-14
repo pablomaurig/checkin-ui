@@ -24,7 +24,7 @@ const Layout = ({ children }: React.PropsWithChildren<React.ReactNode>) => {
       <Nav isOpen={isOpen} onClose={onClose} />
       <Container
         as={'main'}
-        maxW='container.lg'
+        maxW='container.xl'
         py={6}
         flex={'1'}
         display={'flex'}
