@@ -1,5 +1,6 @@
 import {
   Button,
+  Flex,
   Icon,
   Table,
   TableContainer,
@@ -20,6 +21,7 @@ const HABITACIONES = [
   {
     id: 1,
     name: '100',
+    description: 'Habitación en base doble',
     floor: '1',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -27,6 +29,7 @@ const HABITACIONES = [
   {
     id: 2,
     name: '101',
+    description: 'Habitación en base doble',
     floor: '1',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -34,6 +37,7 @@ const HABITACIONES = [
   {
     id: 3,
     name: '102',
+    description: 'Habitación en base doble',
     floor: '1',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -41,6 +45,7 @@ const HABITACIONES = [
   {
     id: 4,
     name: '104',
+    description: 'Habitación en base doble',
     floor: '1',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -48,6 +53,7 @@ const HABITACIONES = [
   {
     id: 5,
     name: '201',
+    description: 'Habitación en base doble',
     floor: '2',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -55,6 +61,7 @@ const HABITACIONES = [
   {
     id: 6,
     name: '202',
+    description: 'Habitación en base doble',
     floor: '2',
     sigleBeds: 1,
     doubleBeds: 2,
@@ -78,10 +85,12 @@ const Rooms = () => {
 
   return (
     <>
-      <PageTitle label='Habitaciones' />
-      <Button as={NavLink} to={'crear'}>
-        Crear habitación
-      </Button>
+      <Flex justifyContent={'space-between'} mb={'4'}>
+        <PageTitle label='Habitaciones' />
+        <Button as={NavLink} to={'crear'} size='sm'>
+          Crear habitación
+        </Button>
+      </Flex>
       <TableContainer>
         <Table size='sm'>
           <Thead>
@@ -108,7 +117,13 @@ const Rooms = () => {
                   >
                     <Icon as={MdDelete} />
                   </Button>
-                  <Button ml={'2'} px={2} rounded={'full'}>
+                  <Button
+                    as={NavLink}
+                    to={`${room.id}`}
+                    state={{ room: room }}
+                    px={2}
+                    rounded={'full'}
+                  >
                     <Icon as={MdOutlineListAlt} />
                   </Button>
                 </Td>
