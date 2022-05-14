@@ -15,7 +15,7 @@ interface AlerDialogType {
   cancelRef: React.RefObject<HTMLButtonElement>;
   label: string;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
-  tipo: string;
+  tipo?: string;
 }
 
 const AlertDialog = ({
@@ -24,7 +24,7 @@ const AlertDialog = ({
   cancelRef,
   label,
   onSubmit,
-  tipo,
+  tipo = 'cancelar',
 }: AlerDialogType) => {
   return (
     <Alert isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
