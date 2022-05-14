@@ -10,7 +10,7 @@ import GuestRoute from '../components/Auth/GuestRoute/GuestRoute';
 import RequireAuth from '../components/Auth/RequireAuth/RequireAuth';
 import RouteWithPermissions from '../components/Auth/RouteWithPermissions';
 import { Permissions } from '../types/user.types';
-import Surveys from './Admin/Encuestas';
+import Surveys from './Admin/Surveys';
 import Bookings from './Admin/Bookings';
 import Rooms from './Admin/Rooms';
 import Employees from './Admin/Employees';
