@@ -24,7 +24,7 @@ const AlertDialog = ({
   cancelRef,
   label,
   onSubmit,
-  tipo = 'cancelar',
+  tipo,
 }: AlerDialogType) => {
   return (
     <Alert isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>

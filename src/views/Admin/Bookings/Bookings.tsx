@@ -16,6 +16,7 @@ import {
   Tr,
   useDisclosure,
   Select,
+  Flex,
 } from '@chakra-ui/react';
 import PageTitle from '../../../components/PageTitle';
 import { MdCancel, MdExitToApp } from 'react-icons/md';
@@ -75,6 +76,11 @@ const Bookings = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [bookingId, setBookingId] = useState<number | null>(null);
   const cancelRef = React.useRef<HTMLButtonElement>(null);
+  const { 
+    isOpen: isOpenCheckOutModal, 
+    onOpen: onOpenCheckOutModal, 
+    onClose: onCloseCheckOutModal 
+} = useDisclosure()
 
   const handleCancel = (id: number) => {
     onOpen();
@@ -87,21 +93,23 @@ const Bookings = () => {
   };
 
   const handleCheckOut = (id: number) => {
-    onOpen();
+    onOpenCheckOutModal();
     setBookingId(id);
   };
 
   const onCheckOutSubmit = () => {
-    console.log('Cancelando reserva con id: ', bookingId);
-    onClose();
+    // Realizar Pago
+    onCloseCheckOutModal();
   };
 
   return (
     <>
+      <Flex justifyContent={'space-between'} mb={'4'}>
       <PageTitle label='Reservas' />
-      <Button as={NavLink} to={'crear'}>
+      <Button as={NavLink} to={'crear'} size='sm'>
         Crear Reserva
       </Button>
+      </Flex>
       <TableContainer>
         <Table size='sm'>
           <Thead>
@@ -137,7 +145,6 @@ const Bookings = () => {
                     onClick={() => handleCancel(booking.id)}
                     px={2}
                     rounded={'full'}
-                    title='Cancelar'
                   >
                     <Icon as={MdCancel} />
                   </Button>
@@ -163,7 +170,7 @@ const Bookings = () => {
         cancelRef={cancelRef}
         tipo='cancelar'
       />
-      <Alert isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+      <Alert isOpen={isOpenCheckOutModal} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
@@ -177,7 +184,7 @@ const Bookings = () => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={onCloseCheckOutModal}>
                 Cancelar
               </Button>
               <Button colorScheme='red' onClick={onCheckOutSubmit} ml={3}>

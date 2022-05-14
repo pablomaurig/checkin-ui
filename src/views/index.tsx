@@ -20,6 +20,8 @@ import RoomsCreate from './Admin/Rooms/RoomsCreate';
 import EmployeesCreate from './Admin/Employees/EmployeesCreate';
 import EmployeeEdit from './Admin/Employees/EmployeeEdit';
 import RoomsEdit from './Admin/Rooms/RoomsEdit';
+import BookingsCreate from './Admin/Bookings/BookingsCreate';
+
 
 const Root = () => (
   <Layout>
@@ -95,7 +97,7 @@ const Root = () => (
       >
         <Route path='encuestas' element={<Surveys />} />
         <Route path='reservas' element={<Bookings />} />
-        <Route path='reservas/crear' element={<Bookings />} />
+        <Route path='reservas/crear' element={<BookingsCreate />} />
         <Route path='reservas/:id' element={<Bookings />} />
         <Route path='habitaciones' element={<Rooms />} />
         <Route path='habitaciones/crear' element={<RoomsCreate />} />
