@@ -18,7 +18,7 @@ import Hotel from './Hotel';
 import Configuration from './Configuration';
 import RoomsCreate from './Admin/Rooms/RoomsCreate';
 import EmployeesCreate from './Admin/Employees/EmployeesCreate';
-import EmployeeViewEdit from './Admin/Employees/EmployeeViewEdit';
+import EmployeeEdit from './Admin/Employees/EmployeeEdit';
 
 const Root = () => (
   <Layout>
@@ -93,7 +93,7 @@ const Root = () => (
         <Route path='habitaciones/:id' element={<Rooms />} />
         <Route path='empleados' element={<Employees />} />
         <Route path='empleados/crear' element={<EmployeesCreate />} />
-        <Route path='empleados/:id' element={<EmployeeViewEdit />} />
+        <Route path='empleados/:id' element={<EmployeeEdit />} />
       </Route>
       <Route
         path='admin/login'

@@ -100,6 +100,7 @@ import {
                     <Button 
                       as={NavLink} 
                       to={`${employee.id}`}
+                      state={{ employee: employee }}
                       ml={'2'} 
                       px={2} 
                       rounded={'full'}

@@ -5,12 +5,17 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
   Input,
+  InputGroup,
+  InputRightElement,
   Link,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import PageTitle from '../../../components/PageTitle';
 import { NavLink } from 'react-router-dom';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import React from 'react';
 
 const CreateEmployeeSchema = Yup.object().shape({
   firstName: Yup.string().required('Este campo es requerido'),
@@ -22,6 +27,8 @@ const CreateEmployeeSchema = Yup.object().shape({
 
 
 const EmployeesCreate = () => {
+  const [show, setShow] = React.useState(false)
+  const handleClick = () => setShow(!show)
   return (
     <Formik
       initialValues={{
@@ -84,7 +91,18 @@ const EmployeesCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='password'>Password</FormLabel>
-                <Input {...field} id='password' type="password" />
+                <InputGroup size='md'>
+                  <Input {...field} id='password'
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {show ? <Icon as={ FaRegEyeSlash } /> : <Icon as={ FaRegEye } />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
                 <FormErrorMessage>{form.errors.password}</FormErrorMessage>
               </FormControl>
             )}
@@ -96,7 +114,18 @@ const EmployeesCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='repeatPassword'>Repite Password</FormLabel>
-                <Input {...field} id='repeatPassword' type="password" />
+                <InputGroup size='md'>
+                  <Input {...field} id='repeatPassword'
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Repeat password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {show ? <Icon as={ FaRegEyeSlash } /> : <Icon as={ FaRegEye } />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
                 <FormErrorMessage>{form.errors.repeatPassword}</FormErrorMessage>
               </FormControl>
             )}

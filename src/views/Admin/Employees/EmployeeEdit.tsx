@@ -5,33 +5,51 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Icon,
   Input,
+  InputGroup,
+  InputRightElement,
   Link
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import PageTitle from '../../../components/PageTitle';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import React from 'react';
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
-
-
-const EmployeeViewEditSchema = Yup.object().shape({
+const EmployeeEditSchema = Yup.object().shape({
   email: Yup.string().required('Este campo es requerido'),
   password: Yup.string().required('Este campo es requerido'),
-  repeatPassword: Yup.string().required('Este campo es requerido').oneOf([Yup.ref('password'), null], 'Las password no coinciden'),
 });
 
+type EmployeeState = {
+  employee: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+};
 
-const EmployeeViewEdit = () => {
-  const { id } = useParams();
+
+const EmployeeEdit = () => {
+  const location = useLocation();
+  const { employee } = location.state as EmployeeState;
+
+  const [show, setShow] = React.useState(false)
+  const handleClick = () => setShow(!show)
+  
   return (
     <Formik
       initialValues={{
-        firstName: id,
-        lastName: '',
-        email: '',
+        firstName: employee.firstName,
+        lastName: employee.lastName,
+        email: employee.email,
         password: '',
       }}
-      validationSchema={EmployeeViewEditSchema}
+      validationSchema={EmployeeEditSchema}
       onSubmit={(values, actions) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
@@ -85,20 +103,19 @@ const EmployeeViewEdit = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='password'>Password</FormLabel>
-                <Input {...field} id='password' type="password" />
+                <InputGroup size='md'>
+                  <Input {...field} id='password'
+                    pr='4.5rem'
+                    type={show ? 'text' : 'password'}
+                    placeholder='Enter password'
+                  />
+                  <InputRightElement width='4.5rem'>
+                    <Button h='1.75rem' size='sm' onClick={handleClick}>
+                      {show ? <Icon as={ FaRegEyeSlash } /> : <Icon as={ FaRegEye } />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
                 <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-              </FormControl>
-            )}
-          </Field>
-          <Field name='repeatPassword'>
-            {({ field, form }: any) => (
-              <FormControl
-                isInvalid={form.errors.repeatPassword && form.touched.repeatPassword}
-                mb={'5'}
-              >
-                <FormLabel htmlFor='repeatPassword'>Repite Password</FormLabel>
-                <Input {...field} id='repeatPassword' type="password" />
-                <FormErrorMessage>{form.errors.repeatPassword}</FormErrorMessage>
               </FormControl>
             )}
           </Field>
@@ -116,4 +133,4 @@ const EmployeeViewEdit = () => {
   );
 };
 
-export default EmployeeViewEdit;
+export default EmployeeEdit;
