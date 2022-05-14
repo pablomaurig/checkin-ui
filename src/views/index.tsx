@@ -6,7 +6,6 @@ import Checkin from './Checkin';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
-// import { Permissions } from '../types/user.types';
 import GuestRoute from '../components/Auth/GuestRoute/GuestRoute';
 import RequireAuth from '../components/Auth/RequireAuth/RequireAuth';
 import RouteWithPermissions from '../components/Auth/RouteWithPermissions';
@@ -17,6 +16,7 @@ import Rooms from './Admin/Rooms';
 import Employees from './Admin/Employees';
 import Hotel from './Hotel';
 import Configuration from './Configuration';
+import RoomsCreate from './Admin/Rooms/RoomsCreate';
 
 const Root = () => (
   <Layout>
@@ -39,6 +39,14 @@ const Root = () => (
       />
       <Route
         path='/'
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path='checkin-ui'
         element={
           <RequireAuth>
             <Home />
@@ -87,7 +95,7 @@ const Root = () => (
         <Route path='reservas/crear' element={<Bookings />} />
         <Route path='reservas/:id' element={<Bookings />} />
         <Route path='habitaciones' element={<Rooms />} />
-        <Route path='habitaciones/crear' element={<Rooms />} />
+        <Route path='habitaciones/crear' element={<RoomsCreate />} />
         <Route path='habitaciones/:id' element={<Rooms />} />
         <Route path='empleados' element={<Employees />} />
         <Route path='empleados/crear' element={<Employees />} />
