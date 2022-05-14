@@ -53,7 +53,7 @@ const RoomsEdit = () => {
     >
       {props => (
         <Form>
-          <PageTitle label='Crear habitación' />
+          <PageTitle label='Detalle de habitación' />
           <Field name='name'>
             {({ field, form }: any) => (
               <FormControl

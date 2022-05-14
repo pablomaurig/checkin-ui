@@ -1,5 +1,6 @@
 import {
   Button,
+  Flex,
   Icon,
   Table,
   TableContainer,
@@ -84,10 +85,12 @@ const Rooms = () => {
 
   return (
     <>
-      <PageTitle label='Habitaciones' />
-      <Button as={NavLink} to={'crear'}>
-        Crear habitación
-      </Button>
+      <Flex justifyContent={'space-between'} mb={'4'}>
+        <PageTitle label='Habitaciones' />
+        <Button as={NavLink} to={'crear'} size='sm'>
+          Crear habitación
+        </Button>
+      </Flex>
       <TableContainer>
         <Table size='sm'>
           <Thead>
