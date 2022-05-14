@@ -19,6 +19,7 @@ import Configuration from './Configuration';
 import RoomsCreate from './Admin/Rooms/RoomsCreate';
 import EmployeesCreate from './Admin/Employees/EmployeesCreate';
 import EmployeeEdit from './Admin/Employees/EmployeeEdit';
+import RoomsEdit from './Admin/Rooms/RoomsEdit';
 
 const Root = () => (
   <Layout>
@@ -41,6 +42,14 @@ const Root = () => (
       />
       <Route
         path='/'
+        element={
+          <RequireAuth>
+            <Home />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path='checkin-ui'
         element={
           <RequireAuth>
             <Home />
@@ -90,7 +99,7 @@ const Root = () => (
         <Route path='reservas/:id' element={<Bookings />} />
         <Route path='habitaciones' element={<Rooms />} />
         <Route path='habitaciones/crear' element={<RoomsCreate />} />
-        <Route path='habitaciones/:id' element={<Rooms />} />
+        <Route path='habitaciones/:id' element={<RoomsEdit />} />
         <Route path='empleados' element={<Employees />} />
         <Route path='empleados/crear' element={<EmployeesCreate />} />
         <Route path='empleados/:id' element={<EmployeeEdit />} />
