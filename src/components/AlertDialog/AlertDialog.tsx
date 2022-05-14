@@ -15,6 +15,7 @@ interface AlerDialogType {
   cancelRef: React.RefObject<HTMLButtonElement>;
   label: string;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
+  tipo: string;
 }
 
 const AlertDialog = ({
@@ -23,27 +24,45 @@ const AlertDialog = ({
   cancelRef,
   label,
   onSubmit,
+  tipo,
 }: AlerDialogType) => {
   return (
     <Alert isOpen={isOpen} onClose={onClose} leastDestructiveRef={cancelRef}>
       <AlertDialogOverlay>
         <AlertDialogContent>
-          <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-            Eliminar {label}
-          </AlertDialogHeader>
+          {tipo === 'cancelar' ? (
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Cancelar {label}
+            </AlertDialogHeader>
+          ) : (
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Eliminar {label}
+            </AlertDialogHeader>
+          )}
 
           <AlertDialogBody>
             Estás seguro? No se podrá deshacer esta acción.
           </AlertDialogBody>
 
-          <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button colorScheme='red' onClick={onSubmit} ml={3}>
-              Eliminar
-            </Button>
-          </AlertDialogFooter>
+          {tipo === 'cancelar' ? (
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Atrás
+              </Button>
+              <Button colorScheme='red' onClick={onSubmit} ml={3}>
+                Cancelar
+              </Button>
+            </AlertDialogFooter>
+          ) : (
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancelar
+              </Button>
+              <Button colorScheme='red' onClick={onSubmit} ml={3}>
+                Eliminar
+              </Button>
+            </AlertDialogFooter>
+          )}
         </AlertDialogContent>
       </AlertDialogOverlay>
     </Alert>

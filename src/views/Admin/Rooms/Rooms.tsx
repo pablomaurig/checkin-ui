@@ -123,6 +123,7 @@ const Rooms = () => {
         onClose={onClose}
         onSubmit={onDeleteSubmit}
         cancelRef={cancelRef}
+        tipo = 'eliminar'
       />
     </>
   );
