@@ -1,5 +1,6 @@
 import {
     Button,
+    Flex,
     Icon,
     Table,
     TableContainer,
@@ -63,10 +64,12 @@ import {
   
     return (
       <>
+      <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Empleados' />
-        <Button as={NavLink} to={'crear'}>
-          Crear usuario
+        <Button as={NavLink} to={'crear'} size='sm'>
+          Alta de empleado
         </Button>
+      </Flex>
         <TableContainer>
           <Table size='sm'>
             <Thead>
