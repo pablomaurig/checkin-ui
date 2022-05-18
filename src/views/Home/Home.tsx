@@ -16,6 +16,16 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  List,
+  ListItem,
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Tfoot,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray, getIn } from 'formik';
@@ -131,17 +141,20 @@ const FieldWidthErrorMessage = ({ name, label }: any) => (
 
 const RequestBookingSchema = Yup.object().shape({
   lastName: Yup.string().required('Este campo es requerido'),
-  bookingNumber: Yup.number()
-    .integer('Este campo debe ser un número entero')
-    .typeError('Este campo debe ser un número')
-    .required('Este campo es requerido'),
+  bookingNumber: Yup.string().required('Este campo es requerido'),
 });
 
 const Home = () => {
-  const [bookingState, setBookingState] = useState(BookingState.Active);
+  const [bookingState, setBookingState] = useState(BookingState.Pending);
   const [surveyStep, setSurveyStep] = useState(0);
+  const [checkoutDone, setCheckoutDone] = useState(false);
   const [lastName, setLastName] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isFinishOpen,
+    onOpen: onFinishOpen,
+    onClose: onFinishClose,
+  } = useDisclosure();
   const FRIENDS_COUNT = 1;
 
   const handleNextSurveyStep = () => {
@@ -150,7 +163,8 @@ const Home = () => {
 
   const handleFinishSurvey = () => {
     onClose();
-    setBookingState(BookingState.Finalized);
+    setCheckoutDone(true);
+    onFinishOpen();
   };
 
   const checkinSchema = Yup.object().shape({
@@ -173,23 +187,6 @@ const Home = () => {
 
   return (
     <>
-      {bookingState === BookingState.Initial && (
-        <Flex
-          direction={'column'}
-          justifyContent={'space-between'}
-          height={'100%'}
-          flex={'1'}
-        >
-          <Text>Para comenzar debe cargar una reserva</Text>
-          <Button
-            onClick={() => {
-              setBookingState(BookingState.Pending);
-            }}
-          >
-            Cargar Reserva
-          </Button>
-        </Flex>
-      )}
       {bookingState === BookingState.Pending && (
         <Flex direction={'column'}>
           <Text>
@@ -206,7 +203,7 @@ const Home = () => {
               onSubmit={(values, actions) => {
                 setTimeout(() => {
                   actions.setSubmitting(false);
-                  setBookingState(BookingState.Created);
+                  setBookingState(BookingState.Approved);
                   setLastName(values.lastName);
                 }, 1000);
               }}
@@ -261,26 +258,6 @@ const Home = () => {
           </Box>
         </Flex>
       )}
-      {bookingState === BookingState.Created && (
-        <Flex
-          direction={'column'}
-          justifyContent={'space-between'}
-          height={'100%'}
-          flex={'1'}
-        >
-          <Box>
-            <Text>La reserva fué creada con éxito.</Text>
-            <Text>5 días previos a su estadía podrá cargar el checkin.</Text>
-          </Box>
-          <Button
-            onClick={() => {
-              setBookingState(BookingState.Approved);
-            }}
-          >
-            Cargar Checkin
-          </Button>
-        </Flex>
-      )}
       {bookingState === BookingState.Approved && (
         <Flex
           direction={'column'}
@@ -314,6 +291,16 @@ const Home = () => {
             >
               {props => (
                 <Form>
+                  <Box mb={'5'}>
+                    <Text>
+                      Usted tiene una reserva disponible para el día 15/05/2022
+                      al 29/05/2022
+                    </Text>
+                    <Text mb='5'>Cantidad de huéspedes: 2</Text>
+                    <Text>
+                      <b>Por favor, complete los siguientes datos:</b>
+                    </Text>
+                  </Box>
                   <FieldArray
                     name='guests'
                     render={arrayHelpers => (
@@ -414,7 +401,7 @@ const Home = () => {
                                   <FormLabel
                                     htmlFor={`guests[${index}].pictureFront`}
                                   >
-                                    Foto DNI (Frente):
+                                    Foto DNI (Dorso):
                                   </FormLabel>
                                   <UploadFile
                                     field={guest.pictureBack}
@@ -467,8 +454,105 @@ const Home = () => {
           height={'100%'}
           flex={'1'}
         >
-          <Text>Checkin realizado con éxito.</Text>
-          <Button onClick={onOpen}>Realizar checkout</Button>
+          <List spacing={2}>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Dirección del hotel:{' '}
+              </Text>
+              Av. Libertador 1234, Buenos Aires
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Teléfono recepción:{' '}
+              </Text>
+              54325432
+            </ListItem>
+            <hr />
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Horario desayuno:{' '}
+              </Text>
+              de 7hs a 10hs
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Horario almuerzo:{' '}
+              </Text>
+              de 12hs a 14:30hs
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Horario cena:{' '}
+              </Text>
+              de 20:30hs a 22:30hs
+            </ListItem>
+            <hr />
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Habitación:{' '}
+              </Text>
+              110
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Red de Wifi:{' '}
+              </Text>
+              Hotel
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Contraseña de Wifi:{' '}
+              </Text>
+              123456
+            </ListItem>
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Horario de checkout:{' '}
+              </Text>
+              10:30hs
+            </ListItem>
+            <hr />
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Consumos durante la estadía:{' '}
+              </Text>
+            </ListItem>
+            <TableContainer>
+              <Table variant='simple' size='sm'>
+                <Thead>
+                  <Tr>
+                    <Th>Detalle</Th>
+                    <Th isNumeric>Costo</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  <Tr>
+                    <Td>Restaurant</Td>
+                    <Td isNumeric>$4280</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Spa</Td>
+                    <Td isNumeric>$2500</Td>
+                  </Tr>
+                  <Tr>
+                    <Td>Frigobar</Td>
+                    <Td isNumeric>$1890</Td>
+                  </Tr>
+                </Tbody>
+                <Tfoot>
+                  <Tr>
+                    <Th>Total</Th>
+                    <Th isNumeric>$8670</Th>
+                  </Tr>
+                </Tfoot>
+              </Table>
+            </TableContainer>
+          </List>
+          {checkoutDone ? (
+            <Button onClick={onFinishOpen}>Realizar checkout</Button>
+          ) : (
+            <Button onClick={onOpen}>Realizar checkout</Button>
+          )}
           <Modal
             onClose={onClose}
             closeOnOverlayClick={false}
@@ -511,17 +595,26 @@ const Home = () => {
               )}
             </ModalContent>
           </Modal>
-        </Flex>
-      )}
-      {bookingState === BookingState.Finalized && (
-        <Flex
-          direction={'column'}
-          justifyContent={'space-between'}
-          height={'100%'}
-          flex={'1'}
-        >
-          <Text>Checkout realizado con éxito.</Text>
-          <Button onClick={() => {}}>Realizar checkout</Button>
+          <Modal
+            onClose={onFinishClose}
+            closeOnOverlayClick={false}
+            size={'xs'}
+            isOpen={isFinishOpen}
+            isCentered
+          >
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Checkout realizado con éxito</ModalHeader>
+              <ModalBody>
+                <Text>
+                  Por favor diríjase a recepción para finalizar su estadía.
+                </Text>
+              </ModalBody>
+              <ModalFooter justifyContent={'center'}>
+                <Button onClick={onFinishClose}>Cerrar</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </Flex>
       )}
     </>
