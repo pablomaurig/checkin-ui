@@ -11,6 +11,7 @@ import {
   Flex,
   Icon,
   Button,
+  Box,
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { MdLogout, MdHotel } from 'react-icons/md';
@@ -123,6 +124,7 @@ const Nav = ({ isOpen, onClose }: any) => {
           <HasPermission
             requiredPermissions={[Permissions.employee, Permissions.admin]}
           >
+            <Box>
             <Link
               as={NavLink}
               to='/admin/reservas'
@@ -140,13 +142,116 @@ const Nav = ({ isOpen, onClose }: any) => {
                 cursor='pointer'
               >
                 <Icon as={AiOutlineForm} mr='4' fontSize='16' />
-                Reservas
+                Próximos ingresos / Egresos 
               </Flex>
             </Link>
+            </Box>
           </HasPermission>
+
+
           <HasPermission
             requiredPermissions={[Permissions.employee, Permissions.admin]}
           >
+            <Box>
+            <Link
+              as={NavLink}
+              to='/admin/reservas'
+              onClick={closeDrawer}
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
+            >
+              <Flex
+                align='center'
+                px={'5'}
+                py='1'
+                mx='0'
+                borderRadius='lg'
+                role='group'
+                cursor='pointer'
+              >
+                <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                Estado de habitaciones  
+              </Flex>
+            </Link>
+            </Box>
+          </HasPermission>   
+
+          <HasPermission
+            requiredPermissions={[Permissions.employee, Permissions.admin]}
+          >
+            <Box>
+            <Link
+              as={NavLink}
+              to='/admin/encuestas'
+              onClick={closeDrawer}
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
+            >
+              <Flex
+                align='center'
+                px={'5'}
+                py='1'
+                mx='0'
+                borderRadius='lg'
+                role='group'
+                cursor='pointer'
+              >
+                <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                Encuesta de Satisfacción 
+              </Flex>
+            </Link>
+            </Box>
+          </HasPermission>
+
+
+          <HasPermission
+            requiredPermissions={[Permissions.employee, Permissions.admin]}
+          >
+            <Box>
+            <Link
+              as={NavLink}
+              to='/admin/reservas'
+              onClick={closeDrawer}
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
+            >
+              <Flex
+                align='center'
+                px={'5'}
+                py='1'
+                mx='0'
+                borderRadius='lg'
+                role='group'
+                cursor='pointer'
+              >
+                <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                Cuenta de la habitación  
+              </Flex>
+            </Link>
+            </Box>
+          </HasPermission>  
+
+          <HasPermission
+            requiredPermissions={[Permissions.employee, Permissions.admin]}
+          >
+            <Box paddingTop={2}>
+              <Flex
+                align='center'
+                px={'5'}
+                py='1'
+                mx='0'
+                borderRadius='lg'
+                role='group'
+                cursor='pointer'
+                fontWeight='bold'
+              >
+                Configuraciones generales
+              </Flex>
+              <Box paddingLeft={10}>
+              <HasPermission
+            requiredPermissions={[Permissions.employee, Permissions.admin]}
+          >
+            <Box>
             <Link
               as={NavLink}
               to='/admin/habitaciones'
@@ -167,32 +272,11 @@ const Nav = ({ isOpen, onClose }: any) => {
                 Habitaciones
               </Flex>
             </Link>
+            </Box>
           </HasPermission>
-          <HasPermission
-            requiredPermissions={[Permissions.employee, Permissions.admin]}
-          >
-            <Link
-              as={NavLink}
-              to='/admin/encuestas'
-              onClick={closeDrawer}
-              style={{ textDecoration: 'none' }}
-              _focus={{ boxShadow: 'none' }}
-            >
-              <Flex
-                align='center'
-                px={'5'}
-                py='1'
-                mx='0'
-                borderRadius='lg'
-                role='group'
-                cursor='pointer'
-              >
-                <Icon as={AiOutlineForm} mr='4' fontSize='16' />
-                Encuestas
-              </Flex>
-            </Link>
-          </HasPermission>
+
           <HasPermission requiredPermissions={[Permissions.admin]}>
+            <Box>
             <Link
               as={NavLink}
               to='/admin/empleados'
@@ -213,7 +297,39 @@ const Nav = ({ isOpen, onClose }: any) => {
                 Empleados
               </Flex>
             </Link>
+            </Box>
           </HasPermission>
+
+          <HasPermission requiredPermissions={[Permissions.admin]}>
+            <Box>
+            <Link
+              as={NavLink}
+              to='/admin/empleados'
+              onClick={closeDrawer}
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
+            >
+              <Flex
+                align='center'
+                px={'5'}
+                py='1'
+                mx='0'
+                borderRadius='lg'
+                role='group'
+                cursor='pointer'
+              >
+                <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                Encuestas
+              </Flex>
+            </Link>
+            </Box>
+          </HasPermission>
+
+            </Box>
+            </Box>
+          </HasPermission> 
+
+
           <Divider my={'3'} />
           <Button
             variant='link'
