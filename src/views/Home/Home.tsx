@@ -131,14 +131,11 @@ const FieldWidthErrorMessage = ({ name, label }: any) => (
 
 const RequestBookingSchema = Yup.object().shape({
   lastName: Yup.string().required('Este campo es requerido'),
-  bookingNumber: Yup.number()
-    .integer('Este campo debe ser un número entero')
-    .typeError('Este campo debe ser un número')
-    .required('Este campo es requerido'),
+  bookingNumber: Yup.string().required('Este campo es requerido'),
 });
 
 const Home = () => {
-  const [bookingState, setBookingState] = useState(BookingState.Active);
+  const [bookingState, setBookingState] = useState(BookingState.Pending);
   const [surveyStep, setSurveyStep] = useState(0);
   const [lastName, setLastName] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -173,23 +170,6 @@ const Home = () => {
 
   return (
     <>
-      {bookingState === BookingState.Initial && (
-        <Flex
-          direction={'column'}
-          justifyContent={'space-between'}
-          height={'100%'}
-          flex={'1'}
-        >
-          <Text>Para comenzar debe cargar una reserva</Text>
-          <Button
-            onClick={() => {
-              setBookingState(BookingState.Pending);
-            }}
-          >
-            Cargar Reserva
-          </Button>
-        </Flex>
-      )}
       {bookingState === BookingState.Pending && (
         <Flex direction={'column'}>
           <Text>
@@ -206,7 +186,7 @@ const Home = () => {
               onSubmit={(values, actions) => {
                 setTimeout(() => {
                   actions.setSubmitting(false);
-                  setBookingState(BookingState.Created);
+                  setBookingState(BookingState.Approved);
                   setLastName(values.lastName);
                 }, 1000);
               }}
@@ -259,26 +239,6 @@ const Home = () => {
               )}
             </Formik>
           </Box>
-        </Flex>
-      )}
-      {bookingState === BookingState.Created && (
-        <Flex
-          direction={'column'}
-          justifyContent={'space-between'}
-          height={'100%'}
-          flex={'1'}
-        >
-          <Box>
-            <Text>La reserva fué creada con éxito.</Text>
-            <Text>5 días previos a su estadía podrá cargar el checkin.</Text>
-          </Box>
-          <Button
-            onClick={() => {
-              setBookingState(BookingState.Approved);
-            }}
-          >
-            Cargar Checkin
-          </Button>
         </Flex>
       )}
       {bookingState === BookingState.Approved && (

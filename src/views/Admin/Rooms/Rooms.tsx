@@ -5,21 +5,24 @@ import {
   Table,
   TableContainer,
   Tbody,
+  Text,
   Td,
   Th,
   Thead,
   Tr,
   useDisclosure,
+  Select,
 } from '@chakra-ui/react';
 import PageTitle from '../../../components/PageTitle';
 import { MdDelete, MdOutlineListAlt } from 'react-icons/md';
 import AlertDialog from '../../../components/AlertDialog/AlertDialog';
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const HABITACIONES = [
   {
     id: 1,
+    bookingId: 2,
     name: '100',
     description: 'Habitación en base doble',
     floor: '1',
@@ -28,6 +31,7 @@ const HABITACIONES = [
   },
   {
     id: 2,
+    bookingId: null,
     name: '101',
     description: 'Habitación en base doble',
     floor: '1',
@@ -36,6 +40,7 @@ const HABITACIONES = [
   },
   {
     id: 3,
+    bookingId: null,
     name: '102',
     description: 'Habitación en base doble',
     floor: '1',
@@ -44,6 +49,7 @@ const HABITACIONES = [
   },
   {
     id: 4,
+    bookingId: 1,
     name: '104',
     description: 'Habitación en base doble',
     floor: '1',
@@ -52,6 +58,7 @@ const HABITACIONES = [
   },
   {
     id: 5,
+    bookingId: null,
     name: '201',
     description: 'Habitación en base doble',
     floor: '2',
@@ -60,6 +67,7 @@ const HABITACIONES = [
   },
   {
     id: 6,
+    bookingId: null,
     name: '202',
     description: 'Habitación en base doble',
     floor: '2',
@@ -72,6 +80,22 @@ const Rooms = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [deteletId, setDeleteId] = useState<number | null>(null);
   const cancelRef = React.useRef<HTMLButtonElement>(null);
+  const [rooms, setRooms] = useState(HABITACIONES)
+
+  const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
+    switch (event.target.value) {
+      case 'available':
+        setRooms(HABITACIONES.filter(room => room.bookingId === null))
+        break;
+      case 'unavailable':
+        setRooms(HABITACIONES.filter(room => room.bookingId !== null))
+        break;
+    
+      default:
+        setRooms(HABITACIONES)
+        break;
+    }
+  }
 
   const handleDelete = (id: number) => {
     onOpen();
@@ -91,6 +115,14 @@ const Rooms = () => {
           Crear habitación
         </Button>
       </Flex>
+      <Flex justifyContent={'flex-end'} alignItems={'center'} mb={'4'}>
+        <Text mr='5' as='label'>Filtrar habitaciones</Text>
+        <Select maxW={'200'} onChange={handleFilter}>
+          <option value='all'>Todas</option>
+          <option value='unavailable'>Ocupadas</option>
+          <option value='available'>Disponibles</option>
+        </Select>
+      </Flex>
       <TableContainer>
         <Table size='sm'>
           <Thead>
@@ -103,7 +135,7 @@ const Rooms = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {HABITACIONES.map(room => (
+            {rooms.map(room => (
               <Tr key={room.name}>
                 <Td>{room.name}</Td>
                 <Td>{room.floor}</Td>
