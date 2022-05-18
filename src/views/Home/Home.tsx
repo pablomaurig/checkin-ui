@@ -145,8 +145,7 @@ const RequestBookingSchema = Yup.object().shape({
 });
 
 const Home = () => {
-  const [bookingState, setBookingState] = useState(BookingState.Active);
-  // const [bookingState, setBookingState] = useState(BookingState.Pending);
+  const [bookingState, setBookingState] = useState(BookingState.Pending);
   const [surveyStep, setSurveyStep] = useState(0);
   const [checkoutDone, setCheckoutDone] = useState(false);
   const [lastName, setLastName] = useState('');
@@ -607,7 +606,9 @@ const Home = () => {
             <ModalContent>
               <ModalHeader>Checkout realizado con éxito</ModalHeader>
               <ModalBody>
-                <Text>Por favor realice el pago en recepción</Text>
+                <Text>
+                  Por favor diríjase a recepción para finalizar su estadía.
+                </Text>
               </ModalBody>
               <ModalFooter justifyContent={'center'}>
                 <Button onClick={onFinishClose}>Cerrar</Button>

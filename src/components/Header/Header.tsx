@@ -70,7 +70,7 @@ export default function Header({ onOpen, isOpen }: any) {
                 style={{ textDecoration: 'none' }}
                 _focus={{ boxShadow: 'none' }}
               >
-                Logo
+                Checkin app
               </Link>
             </Text>
           </Flex>
