@@ -21,3 +21,14 @@ export const loginUser = async (email: string, password: string) => {
   });
   return response;
 };
+
+export const resetPassword = async (email: string) => {
+  const response = await fetch(`${URI}/auth/recover`, {
+    method: 'POST',
+    body: JSON.stringify({ email: email }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  return response;
+};

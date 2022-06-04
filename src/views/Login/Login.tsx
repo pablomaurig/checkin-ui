@@ -19,7 +19,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth.context';
 // import { UserRole } from '../../types/user.types';
 import * as Yup from 'yup';
-import { loginUser } from '../../services/auth.service';
+import { loginUser, resetPassword } from '../../services/auth.service';
 import { Permissions } from '../../types/user.types';
 
 // interface CustomizedState {
@@ -33,6 +33,12 @@ const LoginUserSchema = Yup.object().shape({
     .email('Debe ser un correo electrónico válido')
     .required('Este campo es requerido'),
   password: Yup.string().required('Este campo es requerido'),
+});
+
+const ResetPasswordSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Debe ser un correo electrónico válido')
+    .required('Este campo es requerido'),
 });
 
 const Login = () => {
@@ -54,23 +60,46 @@ const Login = () => {
       const response = await loginUser(email, password);
       const body = await response.json();
 
-      console.log('body', body);
-
       if (response.status === 200) {
         const { user, token } = body;
         const userWithToken = { ...user, token };
         login(userWithToken);
         if (user.role === Permissions.customer) {
-          console.log('es empleado', user.role);
           navigate('/');
         } else {
-          console.log('NO es empleado', user.role);
           navigate('/admin');
         }
       } else {
         toast({
           title: 'Error al loguear.',
           description: 'Usuario o contraseña incorrectos',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+      actions.setSubmitting(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleResetPassword = async (email: string, actions: any) => {
+    try {
+      const response = await resetPassword(email);
+
+      if (response.status === 200) {
+        toast({
+          title: 'Mail de recuperación enviado con éxito',
+          description: 'Revise su bandeja de entrada',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: 'Error al recuperar contraseña',
+          description: 'El correo electrónico no es válido',
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -186,38 +215,63 @@ const Login = () => {
               )}
             </Formik>
           ) : (
-            <Stack spacing={4}>
-              <FormControl id='email'>
-                <FormLabel>Correo electrónico</FormLabel>
-                <Input type='email' />
-              </FormControl>
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}
-                >
-                  <Button
-                    variant={'link'}
-                    onClick={handleToggleLogin}
-                    color={'blue.400'}
-                    fontSize={'sm'}
-                    fontWeight={'normal'}
-                  >
-                    Iniciar sesión
-                  </Button>
-                </Stack>
-                <Button
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                >
-                  Recuperar contraseña
-                </Button>
-              </Stack>
-            </Stack>
+            <Formik
+              initialValues={{
+                email: '',
+              }}
+              validationSchema={ResetPasswordSchema}
+              onSubmit={(values, actions) => {
+                const { email } = values;
+                handleResetPassword(email, actions);
+              }}
+            >
+              {props => (
+                <Form>
+                  <Field name='email'>
+                    {({ field, form }: any) => (
+                      <FormControl
+                        isInvalid={form.errors.email && form.touched.email}
+                        mb={'5'}
+                      >
+                        <FormLabel htmlFor='email'>
+                          Correo electrónico
+                        </FormLabel>
+                        <Input {...field} id='email' type='email' />
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Stack spacing={10}>
+                    <Stack
+                      direction={{ base: 'column', sm: 'row' }}
+                      align={'start'}
+                      justify={'space-between'}
+                    >
+                      <Button
+                        variant={'link'}
+                        onClick={handleToggleLogin}
+                        color={'blue.400'}
+                        fontSize={'sm'}
+                        fontWeight={'normal'}
+                      >
+                        Iniciar sesión
+                      </Button>
+                    </Stack>
+                    <Button
+                      isLoading={props.isSubmitting}
+                      type='submit'
+                      bg={'blue.400'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.500',
+                      }}
+                    >
+                      Recuperar contraseña
+                    </Button>
+                  </Stack>
+                </Form>
+              )}
+            </Formik>
           )}
         </Box>
       </Stack>
