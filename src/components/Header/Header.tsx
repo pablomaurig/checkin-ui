@@ -7,23 +7,15 @@ import {
   Stack,
   useColorModeValue,
   useBreakpointValue,
-  useColorMode,
   Link,
   Icon,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
-import {
-  MdClose,
-  MdOutlineWbSunny,
-  MdDarkMode,
-  MdMenu,
-  MdOutlineLogout,
-} from 'react-icons/md';
+import { MdClose, MdMenu, MdOutlineLogout } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth.context';
 
 export default function Header({ onOpen, isOpen }: any) {
-  const { colorMode, toggleColorMode } = useColorMode();
   const { logout, user } = useContext(AuthContext);
 
   return (
@@ -81,17 +73,6 @@ export default function Header({ onOpen, isOpen }: any) {
             direction={'row'}
             spacing={6}
           >
-            <Button
-              onClick={toggleColorMode}
-              variant={'link'}
-              _focus={{ boxShadow: 'none' }}
-            >
-              {colorMode === 'light' ? (
-                <Icon as={MdDarkMode} />
-              ) : (
-                <Icon as={MdOutlineWbSunny} />
-              )}
-            </Button>
             {user && (
               <Button
                 onClick={() => {
