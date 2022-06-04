@@ -1,3 +1,4 @@
+import { Formik, Form, Field } from 'formik';
 import {
   Flex,
   Box,
@@ -10,11 +11,16 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
+  FormErrorMessage,
 } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth.context';
-import { UserRole } from '../../types/user.types';
+// import { UserRole } from '../../types/user.types';
+import * as Yup from 'yup';
+import { loginUser } from '../../services/auth.service';
+import { Permissions } from '../../types/user.types';
 
 // interface CustomizedState {
 //   from: {
@@ -22,47 +28,62 @@ import { UserRole } from '../../types/user.types';
 //   };
 // }
 
+const LoginUserSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Debe ser un correo electrónico válido')
+    .required('Este campo es requerido'),
+  password: Yup.string().required('Este campo es requerido'),
+});
+
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [loading, SetLoading] = useState(false);
-  const [error, setError] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   // const location = useLocation();
   // const state = location.state as CustomizedState;
   // const from = state?.from?.pathname || '/';
 
+  const toast = useToast();
+
+  const handleLoginUser = async (
+    email: string,
+    password: string,
+    actions: any
+  ) => {
+    try {
+      const response = await loginUser(email, password);
+      const body = await response.json();
+
+      console.log('body', body);
+
+      if (response.status === 200) {
+        const { user, token } = body;
+        const userWithToken = { ...user, token };
+        login(userWithToken);
+        if (user.role === Permissions.customer) {
+          console.log('es empleado', user.role);
+          navigate('/');
+        } else {
+          console.log('NO es empleado', user.role);
+          navigate('/admin');
+        }
+      } else {
+        toast({
+          title: 'Error al loguear.',
+          description: 'Usuario o contraseña incorrectos',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+      actions.setSubmitting(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleToggleLogin = () => {
     setIsLogin(prevState => !prevState);
-  };
-
-  const handleLogin = (email: string) => {
-    let role: UserRole = 'customer';
-
-    if (email.includes('admin')) {
-      role = 'admin';
-    }
-    login({ email, role });
-
-    navigate(role === 'customer' ? '/' : '/admin');
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get('email') as string;
-
-    if (email === '') {
-      setError(true);
-      return;
-    }
-
-    SetLoading(true);
-    setTimeout(() => {
-      handleLogin(email);
-      SetLoading(false);
-    }, 700);
   };
 
   return (
@@ -72,103 +93,134 @@ const Login = () => {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={8} mx={'auto'} maxW={'sm'} py={12} px={6} width={'lg'}>
-          <Stack align={'center'}>
-            <Heading fontSize={'2xl'}>
-              {isLogin ? 'Iniciar sesión' : 'Recuperar contraseña'}
-            </Heading>
-          </Stack>
-          <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={6}
-          >
-            {isLogin ? (
-              <Stack spacing={4}>
-                <FormControl id='email'>
-                  <FormLabel>Correo electrónico</FormLabel>
-                  <Input name='email' type='email' isInvalid={error} />
-                </FormControl>
-                <FormControl id='password'>
-                  <FormLabel>Contraseña</FormLabel>
-                  <Input type='password' isInvalid={error} />
-                </FormControl>
-                {error && (
-                  <Text color={'red.400'}>Usuario o contraseña incorrecto</Text>
-                )}
-                <Stack spacing={10}>
-                  <Stack
-                    direction={{ base: 'column', sm: 'row' }}
-                    align={'start'}
-                    justify={'space-between'}
-                  >
-                    <Button
-                      variant={'link'}
-                      onClick={handleToggleLogin}
-                      color={'blue.400'}
-                      fontSize={'sm'}
-                      fontWeight={'normal'}
+      <Stack spacing={8} mx={'auto'} maxW={'sm'} py={12} px={6} width={'lg'}>
+        <Stack align={'center'}>
+          <Heading fontSize={'2xl'}>
+            {isLogin ? 'Iniciar sesión' : 'Recuperar contraseña'}
+          </Heading>
+        </Stack>
+        <Box
+          rounded={'lg'}
+          bg={useColorModeValue('white', 'gray.700')}
+          boxShadow={'lg'}
+          p={6}
+        >
+          {isLogin ? (
+            <Formik
+              initialValues={{
+                email: '',
+                password: '',
+              }}
+              validationSchema={LoginUserSchema}
+              onSubmit={(values, actions) => {
+                const { email, password } = values;
+                handleLoginUser(email, password, actions);
+              }}
+            >
+              {props => (
+                <Form>
+                  <Field name='email'>
+                    {({ field, form }: any) => (
+                      <FormControl
+                        isInvalid={form.errors.email && form.touched.email}
+                        mb={'5'}
+                      >
+                        <FormLabel htmlFor='email'>
+                          Correo electrónico
+                        </FormLabel>
+                        <Input {...field} id='email' type='email' />
+                        <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name='password'>
+                    {({ field, form }: any) => (
+                      <FormControl
+                        isInvalid={
+                          form.errors.password && form.touched.password
+                        }
+                        mb={'5'}
+                      >
+                        <FormLabel htmlFor='password'>Contraseña</FormLabel>
+                        <Input {...field} id='password' type='password' />
+                        <FormErrorMessage>
+                          {form.errors.password}
+                        </FormErrorMessage>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Stack spacing={10}>
+                    <Stack
+                      direction={{ base: 'column', sm: 'row' }}
+                      align={'start'}
+                      justify={'space-between'}
                     >
-                      Olvidó su contraseña?
-                    </Button>
-                    <Text fontSize={'sm'}>
-                      <Link as={NavLink} to={'/registro'} color={'blue.400'}>
-                        Crear nuevo usuario
-                      </Link>
-                    </Text>
-                  </Stack>
-                  <Button
-                    type='submit'
-                    isLoading={loading}
-                    bg={'blue.400'}
-                    color={'white'}
-                    _hover={{
-                      bg: 'blue.500',
-                    }}
-                  >
-                    Iniciar sesión
-                  </Button>
-                </Stack>
-              </Stack>
-            ) : (
-              <Stack spacing={4}>
-                <FormControl id='email'>
-                  <FormLabel>Correo electrónico</FormLabel>
-                  <Input type='email' />
-                </FormControl>
-                <Stack spacing={10}>
-                  <Stack
-                    direction={{ base: 'column', sm: 'row' }}
-                    align={'start'}
-                    justify={'space-between'}
-                  >
+                      <Button
+                        variant={'link'}
+                        onClick={handleToggleLogin}
+                        color={'blue.400'}
+                        fontSize={'sm'}
+                        fontWeight={'normal'}
+                      >
+                        Olvidó su contraseña?
+                      </Button>
+                      <Text fontSize={'sm'}>
+                        <Link as={NavLink} to={'/registro'} color={'blue.400'}>
+                          Crear nuevo usuario
+                        </Link>
+                      </Text>
+                    </Stack>
                     <Button
-                      variant={'link'}
-                      onClick={handleToggleLogin}
-                      color={'blue.400'}
-                      fontSize={'sm'}
-                      fontWeight={'normal'}
+                      isLoading={props.isSubmitting}
+                      type='submit'
+                      bg={'blue.400'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.500',
+                      }}
                     >
                       Iniciar sesión
                     </Button>
                   </Stack>
+                </Form>
+              )}
+            </Formik>
+          ) : (
+            <Stack spacing={4}>
+              <FormControl id='email'>
+                <FormLabel>Correo electrónico</FormLabel>
+                <Input type='email' />
+              </FormControl>
+              <Stack spacing={10}>
+                <Stack
+                  direction={{ base: 'column', sm: 'row' }}
+                  align={'start'}
+                  justify={'space-between'}
+                >
                   <Button
-                    bg={'blue.400'}
-                    color={'white'}
-                    _hover={{
-                      bg: 'blue.500',
-                    }}
+                    variant={'link'}
+                    onClick={handleToggleLogin}
+                    color={'blue.400'}
+                    fontSize={'sm'}
+                    fontWeight={'normal'}
                   >
-                    Recuperar contraseña
+                    Iniciar sesión
                   </Button>
                 </Stack>
+                <Button
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                >
+                  Recuperar contraseña
+                </Button>
               </Stack>
-            )}
-          </Box>
-        </Stack>
-      </form>
+            </Stack>
+          )}
+        </Box>
+      </Stack>
     </Flex>
   );
 };

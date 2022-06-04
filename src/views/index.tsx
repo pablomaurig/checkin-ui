@@ -22,7 +22,6 @@ import EmployeeEdit from './Admin/Employees/EmployeeEdit';
 import RoomsEdit from './Admin/Rooms/RoomsEdit';
 import BookingsCreate from './Admin/Bookings/BookingsCreate';
 
-
 const Root = () => (
   <Layout>
     <Routes>
@@ -46,7 +45,12 @@ const Root = () => (
         path='/'
         element={
           <RequireAuth>
-            <Home />
+            <RouteWithPermissions
+              fallback='/admin'
+              requiredPermissions={[Permissions.customer]}
+            >
+              <Home />
+            </RouteWithPermissions>
           </RequireAuth>
         }
       />

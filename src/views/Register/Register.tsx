@@ -28,7 +28,11 @@ const CreateAccountSchema = Yup.object().shape({
 const Register = () => {
   const toast = useToast();
   const navigate = useNavigate();
-  const handleCreateAccount = async (email: string, password: string) => {
+  const handleCreateAccount = async (
+    email: string,
+    password: string,
+    actions: any
+  ) => {
     try {
       const response = await createAccount(email, password);
 
@@ -50,6 +54,7 @@ const Register = () => {
           isClosable: true,
         });
       }
+      actions.setSubmitting(false);
     } catch (error) {
       console.error(error);
     }
@@ -80,11 +85,8 @@ const Register = () => {
               }}
               validationSchema={CreateAccountSchema}
               onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  const { email, password } = values;
-                  handleCreateAccount(email, password);
-                  actions.setSubmitting(false);
-                }, 1000);
+                const { email, password } = values;
+                handleCreateAccount(email, password, actions);
               }}
             >
               {props => (
