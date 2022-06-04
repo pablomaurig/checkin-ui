@@ -12,98 +12,90 @@ import {
   Tr,
   useDisclosure,
   Select,
+  useToast,
 } from '@chakra-ui/react';
 import PageTitle from '../../../components/PageTitle';
 import { MdDelete, MdOutlineListAlt } from 'react-icons/md';
 import AlertDialog from '../../../components/AlertDialog/AlertDialog';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
-const HABITACIONES = [
-  {
-    id: 1,
-    bookingId: 2,
-    name: '100',
-    description: 'Habitación en base doble',
-    floor: '1',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-  {
-    id: 2,
-    bookingId: null,
-    name: '101',
-    description: 'Habitación en base doble',
-    floor: '1',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-  {
-    id: 3,
-    bookingId: null,
-    name: '102',
-    description: 'Habitación en base doble',
-    floor: '1',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-  {
-    id: 4,
-    bookingId: 1,
-    name: '104',
-    description: 'Habitación en base doble',
-    floor: '1',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-  {
-    id: 5,
-    bookingId: null,
-    name: '201',
-    description: 'Habitación en base doble',
-    floor: '2',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-  {
-    id: 6,
-    bookingId: null,
-    name: '202',
-    description: 'Habitación en base doble',
-    floor: '2',
-    sigleBeds: 1,
-    doubleBeds: 2,
-  },
-];
+import { getRooms, deleteRoom } from '../../../services/rooms.service';
+import { AuthContext } from '../../../context/Auth.context';
+import { Room } from '../../../types/rooms.types';
 
 const Rooms = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useContext(AuthContext);
   const [deteletId, setDeleteId] = useState<number | null>(null);
   const cancelRef = React.useRef<HTMLButtonElement>(null);
-  const [rooms, setRooms] = useState(HABITACIONES)
+  const toast = useToast();
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [filteredRooms, setFilteredRooms] = useState<Room[]>([]);
 
   const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
     switch (event.target.value) {
       case 'available':
-        setRooms(HABITACIONES.filter(room => room.bookingId === null))
+        setFilteredRooms(rooms.filter(room => room.bookingId === null));
         break;
       case 'unavailable':
-        setRooms(HABITACIONES.filter(room => room.bookingId !== null))
+        setFilteredRooms(rooms.filter(room => room.bookingId !== null));
         break;
-    
+
       default:
-        setRooms(HABITACIONES)
+        setFilteredRooms(rooms);
         break;
     }
-  }
+  };
+
+  const setHabitaciones = async () => {
+    if (user) {
+      const habitaciones = await getRooms(user.token);
+      setRooms(habitaciones);
+      setFilteredRooms(habitaciones);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      setHabitaciones();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   const handleDelete = (id: number) => {
     onOpen();
     setDeleteId(id);
   };
 
+  const handleDeleteRoom = async () => {
+    try {
+      if (user && deteletId) {
+        const response = await deleteRoom(deteletId, user.token);
+        if (response.status === 200) {
+          toast({
+            title: 'Habitación eliminada con éxito',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+          setHabitaciones();
+        } else {
+          toast({
+            title: 'Error al eliminar habitación',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onDeleteSubmit = () => {
-    console.log('Eliminando habitación con id: ', deteletId);
+    handleDeleteRoom();
     onClose();
   };
 
@@ -116,7 +108,9 @@ const Rooms = () => {
         </Button>
       </Flex>
       <Flex justifyContent={'flex-end'} alignItems={'center'} mb={'4'}>
-        <Text mr='5' as='label'>Filtrar habitaciones</Text>
+        <Text mr='5' as='label'>
+          Filtrar habitaciones
+        </Text>
         <Select maxW={'200'} onChange={handleFilter}>
           <option value='all'>Todas</option>
           <option value='unavailable'>Ocupadas</option>
@@ -135,15 +129,15 @@ const Rooms = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {rooms.map(room => (
-              <Tr key={room.name}>
+            {filteredRooms.map(room => (
+              <Tr key={room.id}>
                 <Td>{room.name}</Td>
                 <Td>{room.floor}</Td>
-                <Td>{room.sigleBeds}</Td>
+                <Td>{room.singleBeds}</Td>
                 <Td>{room.doubleBeds}</Td>
                 <Td isNumeric>
                   <Button
-                    onClick={() => handleDelete(room.id)}
+                    onClick={() => handleDelete(room.id as number)}
                     px={2}
                     rounded={'full'}
                   >

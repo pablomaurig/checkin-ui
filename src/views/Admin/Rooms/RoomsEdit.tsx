@@ -7,24 +7,30 @@ import {
   FormLabel,
   Input,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import PageTitle from '../../../components/PageTitle';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Room } from '../../../types/rooms.types';
+import { updateRoom } from '../../../services/rooms.service';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/Auth.context';
 
 const EditRoomSchema = Yup.object().shape({
   name: Yup.string().required('Este campo es requerido'),
   description: Yup.string().required('Este campo es requerido'),
-  singleBed: Yup.number().required('Este campo es requerido'),
-  doubleBed: Yup.number().required('Este campo es requerido'),
+  singleBeds: Yup.number().required('Este campo es requerido'),
+  doubleBeds: Yup.number().required('Este campo es requerido'),
   floor: Yup.number().required('Este campo es requerido'),
 });
 
 type RoomState = {
   room: {
+    id: number;
     name: string;
     description: string;
-    sigleBeds: string;
+    singleBeds: string;
     doubleBeds: string;
     floor: string;
   };
@@ -32,23 +38,51 @@ type RoomState = {
 
 const RoomsEdit = () => {
   const location = useLocation();
+  const toast = useToast();
+  const navigate = useNavigate();
   const { room } = location.state as RoomState;
+  const { user } = useContext(AuthContext);
+
+  const handleEditRoom = async (roomValue: Partial<Room>, actions: any) => {
+    if (user) {
+      try {
+        const response = await updateRoom(room.id, roomValue, user.token);
+
+        if (response.status === 200) {
+          navigate(-1);
+          toast({
+            title: 'Habitación editada con éxito',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: 'Hubo un problema al editar la habitación',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    actions.setSubmitting(false);
+  };
 
   return (
     <Formik
       initialValues={{
         name: room.name,
         description: room.description,
-        singleBed: room.sigleBeds,
-        doubleBed: room.doubleBeds,
+        singleBeds: room.singleBeds,
+        doubleBeds: room.doubleBeds,
         floor: room.floor,
       }}
       validationSchema={EditRoomSchema}
       onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
+        handleEditRoom(values, actions);
       }}
     >
       {props => (
@@ -90,27 +124,27 @@ const RoomsEdit = () => {
               </FormControl>
             )}
           </Field>
-          <Field name='singleBed'>
+          <Field name='singleBeds'>
             {({ field, form }: any) => (
               <FormControl
-                isInvalid={form.errors.singleBed && form.touched.singleBed}
+                isInvalid={form.errors.singleBeds && form.touched.singleBeds}
                 mb={'5'}
               >
-                <FormLabel htmlFor='singleBed'>Camas simples</FormLabel>
-                <Input {...field} id='singleBed' />
-                <FormErrorMessage>{form.errors.singleBed}</FormErrorMessage>
+                <FormLabel htmlFor='singleBeds'>Camas simples</FormLabel>
+                <Input {...field} id='singleBeds' />
+                <FormErrorMessage>{form.errors.singleBeds}</FormErrorMessage>
               </FormControl>
             )}
           </Field>
-          <Field name='doubleBed'>
+          <Field name='doubleBeds'>
             {({ field, form }: any) => (
               <FormControl
-                isInvalid={form.errors.doubleBed && form.touched.doubleBed}
+                isInvalid={form.errors.doubleBeds && form.touched.doubleBeds}
                 mb={'5'}
               >
-                <FormLabel htmlFor='doubleBed'>Camas dobles</FormLabel>
-                <Input {...field} id='doubleBed' />
-                <FormErrorMessage>{form.errors.doubleBed}</FormErrorMessage>
+                <FormLabel htmlFor='doubleBeds'>Camas dobles</FormLabel>
+                <Input {...field} id='doubleBeds' />
+                <FormErrorMessage>{form.errors.doubleBeds}</FormErrorMessage>
               </FormControl>
             )}
           </Field>

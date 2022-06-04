@@ -10,6 +10,7 @@ export interface User {
   id: number;
   lastName: string | null;
   updatedAt: string;
+  token: string;
 }
 
 export enum Permissions {
