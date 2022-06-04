@@ -8,66 +8,30 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { useContext, useEffect, useState } from 'react';
 import PageTitle from '../../../components/PageTitle';
-
-const ENCUESTAS = [
-  {
-    id: 1,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-  {
-    id: 2,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-  {
-    id: 3,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-  {
-    id: 4,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-  {
-    id: 5,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-  {
-    id: 6,
-    name: 'Carlos',
-    lastName: 'Gonzalez',
-    surv1: 4,
-    surv2: 1,
-    surv3: 2,
-    surv4: 5,
-  },
-];
+import { AuthContext } from '../../../context/Auth.context';
+import { getSurveys } from '../../../services/surveys.service';
+import { Survey } from '../../../types/surveys.types';
 
 const Surveys = () => {
+  const { user } = useContext(AuthContext);
+  const [surveys, setSurveys] = useState<Survey[]>([]);
+
+  const setEncuestas = async () => {
+    if (user) {
+      const encuestas = await getSurveys(user.token);
+      setSurveys(encuestas);
+    }
+  };
+
+  useEffect(() => {
+    try {
+      setEncuestas();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
   return (
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
@@ -78,24 +42,20 @@ const Surveys = () => {
           <Thead>
             <Tr>
               <Th>Fecha</Th>
-              <Th>Nombre</Th>
-              <Th>Apellido</Th>
+              <Th>Booking id</Th>
               <Th>Encuesta 1</Th>
               <Th>Encuesta 2</Th>
               <Th>Encuesta 3</Th>
-              <Th>Encuesta 4</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {ENCUESTAS.map(survey => (
-              <Tr key={survey.name}>
-                <Td>14/05/22</Td>
-                <Td>{survey.name}</Td>
-                <Td>{survey.lastName}</Td>
-                <Td>{survey.surv1}</Td>
-                <Td>{survey.surv2}</Td>
-                <Td>{survey.surv3}</Td>
-                <Td>{survey.surv4}</Td>
+            {surveys.map(survey => (
+              <Tr key={survey.id}>
+                <Td>{survey.createdAt}</Td>
+                <Td>{survey.bookingId}</Td>
+                <Td>{survey.answer1}</Td>
+                <Td>{survey.answer2}</Td>
+                <Td>{survey.answer3}</Td>
               </Tr>
             ))}
           </Tbody>
