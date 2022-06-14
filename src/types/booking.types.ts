@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export enum BookingState {
+export enum BookingStateMock {
   Initial,
   Pending,
   Created,
@@ -10,16 +10,36 @@ export enum BookingState {
 }
 export interface Booking {
   id: number;
-  roomId: number;
+  roomId: number | null;
   bookingNumber: number;
   surname: string;
   startDate: string;
   endDate: string;
   amountGuests: number;
-  checkin: string;
-  checkout: string;
+  checkin: string | null;
+  checkout: string | null;
   state: string;
   enable: boolean;
   createdAt: string;
   UpdatedAt: string;
+}
+
+export interface CreateBooking {
+  bookingNumber: string;
+  surname: string;
+  startDate: string;
+  endDate: string;
+  amountGuests: number;
+}
+
+export interface Spent {
+  id?: number;
+  bookingId: number | string;
+  description: string;
+  amount: number | string;
+}
+
+export enum BookingState {
+  DONE = 'CheckIn Done',
+  PENDING = 'CheckIn Pending',
 }
