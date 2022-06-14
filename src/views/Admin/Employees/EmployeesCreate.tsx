@@ -10,25 +10,62 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  useToast,
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import PageTitle from '../../../components/PageTitle';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../context/Auth.context';
+import { CreateEmployee, Employee } from '../../../types/employees.types';
+import { createEmployee } from '../../../services/employees.service';
 
 const CreateEmployeeSchema = Yup.object().shape({
   firstName: Yup.string().required('Este campo es requerido'),
   lastName: Yup.string().required('Este campo es requerido'),
   email: Yup.string().required('Este campo es requerido'),
   password: Yup.string().required('Este campo es requerido'),
-  repeatPassword: Yup.string().required('Este campo es requerido').oneOf([Yup.ref('password'), null], 'Las password no coinciden'),
+  repeatPassword: Yup.string()
+    .required('Este campo es requerido')
+    .oneOf([Yup.ref('password'), null], 'Las password no coinciden'),
 });
 
-
 const EmployeesCreate = () => {
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
+  const toast = useToast();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+
+  const handleCreateEmployee = async (employee: Employee, actions: any) => {
+    if (user) {
+      try {
+        const response = await createEmployee(employee, user.token);
+
+        if (response.status === 200) {
+          navigate(-1);
+          toast({
+            title: 'Empleado creado con éxito',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            title: 'Hubo un problema al crear el empleado',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    actions.setSubmitting(false);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -36,13 +73,12 @@ const EmployeesCreate = () => {
         lastName: '',
         email: '',
         password: '',
+        repeatPassword: '',
       }}
       validationSchema={CreateEmployeeSchema}
-      onSubmit={(values, actions) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-        }, 1000);
+      onSubmit={(values: CreateEmployee, actions) => {
+        delete values.repeatPassword;
+        handleCreateEmployee(values, actions);
       }}
     >
       {props => (
@@ -92,14 +128,20 @@ const EmployeesCreate = () => {
               >
                 <FormLabel htmlFor='password'>Password</FormLabel>
                 <InputGroup size='md'>
-                  <Input {...field} id='password'
+                  <Input
+                    {...field}
+                    id='password'
                     pr='4.5rem'
                     type={show ? 'text' : 'password'}
                     placeholder='Enter password'
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
-                      {show ? <Icon as={ FaRegEyeSlash } /> : <Icon as={ FaRegEye } />}
+                      {show ? (
+                        <Icon as={FaRegEye} />
+                      ) : (
+                        <Icon as={FaRegEyeSlash} />
+                      )}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
@@ -110,23 +152,33 @@ const EmployeesCreate = () => {
           <Field name='repeatPassword'>
             {({ field, form }: any) => (
               <FormControl
-                isInvalid={form.errors.repeatPassword && form.touched.repeatPassword}
+                isInvalid={
+                  form.errors.repeatPassword && form.touched.repeatPassword
+                }
                 mb={'5'}
               >
                 <FormLabel htmlFor='repeatPassword'>Repite Password</FormLabel>
                 <InputGroup size='md'>
-                  <Input {...field} id='repeatPassword'
+                  <Input
+                    {...field}
+                    id='repeatPassword'
                     pr='4.5rem'
                     type={show ? 'text' : 'password'}
                     placeholder='Repeat password'
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
-                      {show ? <Icon as={ FaRegEyeSlash } /> : <Icon as={ FaRegEye } />}
+                      {show ? (
+                        <Icon as={FaRegEye} />
+                      ) : (
+                        <Icon as={FaRegEyeSlash} />
+                      )}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                <FormErrorMessage>{form.errors.repeatPassword}</FormErrorMessage>
+                <FormErrorMessage>
+                  {form.errors.repeatPassword}
+                </FormErrorMessage>
               </FormControl>
             )}
           </Field>
