@@ -272,8 +272,7 @@ const Bookings = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {bookings.map(booking => { 
-              return (
+            {bookings.map(booking => (
               <Tr key={booking.id}>
                 <Td>{booking.bookingNumber}</Td>
                 <Td>{booking.surname}</Td>
@@ -333,7 +332,7 @@ const Bookings = () => {
                   )}
                 </Td>
               </Tr>
-            )})}
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
