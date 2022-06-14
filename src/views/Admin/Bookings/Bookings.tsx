@@ -266,13 +266,14 @@ const Bookings = () => {
               <Th> Habitación asignada </Th>
               <Th> Fecha Ingreso </Th>
               <Th> Fecha Salida </Th>
-              <Th> Cantidad de huéspedes </Th>
+              <Th> Cant. de huéspedes </Th>
               <Th> Estado </Th>
               <Th isNumeric>Acciones</Th>
             </Tr>
           </Thead>
           <Tbody>
-            {bookings.map(booking => (
+            {bookings.map(booking => { 
+              return (
               <Tr key={booking.id}>
                 <Td>{booking.bookingNumber}</Td>
                 <Td>{booking.surname}</Td>
@@ -295,8 +296,8 @@ const Bookings = () => {
                     ))}
                   </Select>
                 </Td>
-                <Td>{booking.startDate}</Td>
-                <Td>{booking.endDate}</Td>
+                <Td>{new Date(booking.startDate).toLocaleDateString('es')}</Td>
+                <Td>{new Date(booking.endDate).toLocaleDateString('es')}</Td>
                 <Td>{booking.amountGuests}</Td>
                 <Td>{booking.state} </Td>
                 <Td isNumeric>
@@ -332,7 +333,7 @@ const Bookings = () => {
                   )}
                 </Td>
               </Tr>
-            ))}
+            )})}
           </Tbody>
         </Table>
       </TableContainer>
