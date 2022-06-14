@@ -29,7 +29,7 @@ import {
 } from '@chakra-ui/react';
 import * as Yup from 'yup';
 import { Formik, Form, Field, FieldArray, getIn } from 'formik';
-import { BookingState } from '../../types/booking.types';
+import { BookingStateMock } from '../../types/booking.types';
 import { useRef, useState } from 'react';
 import { MdDelete } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
@@ -145,7 +145,7 @@ const RequestBookingSchema = Yup.object().shape({
 });
 
 const Home = () => {
-  const [bookingState, setBookingState] = useState(BookingState.Pending);
+  const [bookingState, setBookingState] = useState(BookingStateMock.Pending);
   const [surveyStep, setSurveyStep] = useState(0);
   const [checkoutDone, setCheckoutDone] = useState(false);
   const [lastName, setLastName] = useState('');
@@ -187,7 +187,7 @@ const Home = () => {
 
   return (
     <>
-      {bookingState === BookingState.Pending && (
+      {bookingState === BookingStateMock.Pending && (
         <Flex direction={'column'}>
           <Text>
             A continuación ingrese el número de la reserva y el apellido de
@@ -203,7 +203,7 @@ const Home = () => {
               onSubmit={(values, actions) => {
                 setTimeout(() => {
                   actions.setSubmitting(false);
-                  setBookingState(BookingState.Approved);
+                  setBookingState(BookingStateMock.Approved);
                   setLastName(values.lastName);
                 }, 1000);
               }}
@@ -258,7 +258,7 @@ const Home = () => {
           </Box>
         </Flex>
       )}
-      {bookingState === BookingState.Approved && (
+      {bookingState === BookingStateMock.Approved && (
         <Flex
           direction={'column'}
           justifyContent={'space-between'}
@@ -285,7 +285,7 @@ const Home = () => {
               onSubmit={(values, actions) => {
                 setTimeout(() => {
                   actions.setSubmitting(false);
-                  setBookingState(BookingState.Active);
+                  setBookingState(BookingStateMock.Active);
                 }, 1000);
               }}
             >
@@ -447,7 +447,7 @@ const Home = () => {
           </Box>
         </Flex>
       )}
-      {bookingState === BookingState.Active && (
+      {bookingState === BookingStateMock.Active && (
         <Flex
           direction={'column'}
           justifyContent={'space-between'}
