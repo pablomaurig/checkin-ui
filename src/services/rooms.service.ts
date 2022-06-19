@@ -14,6 +14,18 @@ export const getRooms = async (token: string) => {
   return habitaciones;
 };
 
+export const getRoomByBookingId = async (bookingId: number, token: string) => {
+  const response = await fetch(`${URI}/rooms/assignables/${bookingId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};
+
 export const createRoom = async (room: Room, token: string) => {
   const response = await fetch(`${URI}/rooms`, {
     method: 'POST',

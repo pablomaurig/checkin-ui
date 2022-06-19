@@ -18,5 +18,10 @@ export const useAuth = () => {
     localStorage.removeItem('user');
   };
 
-  return { user, login, logout };
+  const updateUser = (user: User) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  };
+
+  return { user, login, logout, updateUser };
 };
