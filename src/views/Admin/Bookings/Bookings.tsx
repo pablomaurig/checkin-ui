@@ -308,7 +308,7 @@ const Bookings = () => {
                   >
                     <Icon as={MdCancel} />
                   </Button>
-                  {booking.roomId !== null && booking.checkin !== null && (
+                  {booking.roomId !== null && booking.checkIn !== null && (
                     <>
                       <Button
                         title='Agregar gasto'

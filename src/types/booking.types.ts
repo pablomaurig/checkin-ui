@@ -8,6 +8,13 @@ export enum BookingStateMock {
   Active,
   Finalized,
 }
+
+export interface Spent {
+  id?: number;
+  bookingId: number | string;
+  description: string;
+  amount: number | string;
+}
 export interface Booking {
   id: number;
   roomId: number | null;
@@ -16,12 +23,17 @@ export interface Booking {
   startDate: string;
   endDate: string;
   amountGuests: number;
-  checkin: string | null;
-  checkout: string | null;
+  checkIn: string | null;
+  checkOut: string | null;
   state: string;
   enable: boolean;
   createdAt: string;
   UpdatedAt: string;
+}
+
+export interface GetBooking {
+  lastName: string;
+  bookingNumber: string;
 }
 
 export interface CreateBooking {
@@ -32,14 +44,24 @@ export interface CreateBooking {
   amountGuests: number;
 }
 
-export interface Spent {
-  id?: number;
-  bookingId: number | string;
-  description: string;
-  amount: number | string;
-}
-
 export enum BookingState {
   DONE = 'CheckIn Done',
   PENDING = 'CheckIn Pending',
+}
+
+export interface Guest {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  dateOfBirth: string;
+  telephoneNumber: string;
+  country: string;
+  idCardFront: string;
+  idCardBack: string;
+}
+
+export interface CheckinBody {
+  bookingId: number;
+  userId: number;
+  guests: Guest[];
 }
