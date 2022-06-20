@@ -39,24 +39,31 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
       .of(
         Yup.object().shape({
           firstName: Yup.string()
-            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
-            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
-          lastName: Yup.string()
-            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
-            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
-          gender: Yup.string().required('Este campo es requerido'),
-          dateOfBirth: Yup.string()
             .matches(
-              /^\d{2}\/\d{2}\/\d{4}$/,
-              'Debe ingresar fecha con formato dd/mm/aaaa'
+              /^[a-zA-Z]+$/,
+              'Sólo puede ingresar caracteres alfabéticos'
             )
+            .max(100, 'Supera el máximo de 100 caracteres')
             .required('Este campo es requerido'),
+          lastName: Yup.string()
+            .matches(
+              /^[a-zA-Z]+$/,
+              'Sólo puede ingresar caracteres alfabéticos'
+            )
+            .max(100, 'Supera el máximo de 100 caracteres')
+            .required('Este campo es requerido'),
+          gender: Yup.string().required('Este campo es requerido'),
           telephoneNumber: Yup.string()
             .max(100, 'Supera el máximo de 100 caracteres')
             .required('Este campo es requerido'),
           country: Yup.string()
-            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
-            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
+            .matches(
+              /^[a-zA-Z]+$/,
+              'Sólo puede ingresar caracteres alfabéticos'
+            )
+            .max(100, 'Supera el máximo de 100 caracteres')
+            .required('Este campo es requerido'),
+          dateOfBirth: Yup.string().required('Este campo es requerido'),
           idCardFront: Yup.string()
             .required('Este campo es requerido')
             .nullable(),
@@ -69,7 +76,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
       .max(amountGuests, `Debe ingresar ${amountGuests} huespedes`),
   });
 
-  const FieldWidthErrorMessage = ({ name, label }: any) => (
+  const FieldWidthErrorMessage = ({ name, label, type = 'text' }: any) => (
     <Field name={name}>
       {({ field, form }: any) => {
         const error = getIn(form.errors, name);
@@ -78,7 +85,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
         return (
           <FormControl isInvalid={error && touched} mb={'5'}>
             <FormLabel htmlFor={name}>{label}:</FormLabel>
-            <Input {...field} id={name} />
+            <Input {...field} id={name} type={type} />
             <FormErrorMessage>{error}</FormErrorMessage>
           </FormControl>
         );
@@ -282,6 +289,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
                           <FieldWidthErrorMessage
                             name={`guests[${index}].dateOfBirth`}
                             label={'Fecha de nacimiento'}
+                            type={'date'}
                           />
                           <FieldWidthErrorMessage
                             name={`guests[${index}].telephoneNumber`}

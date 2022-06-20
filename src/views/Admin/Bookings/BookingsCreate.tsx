@@ -21,19 +21,10 @@ const CreateBookingSchema = Yup.object().shape({
   bookingNumber: Yup.string().required('Este campo es requerido'),
   surname: Yup.string()
     .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
-    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),  
-  startDate: Yup.string()
-    .matches(
-      /^\d{2}\/\d{2}\/\d{4}$/,
-      'Debe ingresar fecha con formato dd/mm/aaaa'
-    )
+    .max(100, 'Supera el máximo de 100 caracteres')
     .required('Este campo es requerido'),
-  endDate: Yup.string()
-    .matches(
-      /^\d{2}\/\d{2}\/\d{4}$/,
-      'Debe ingresar fecha con formato dd/mm/aaaa'
-    )
-    .required('Este campo es requerido'),
+  startDate: Yup.string().required('Este campo es requerido'),
+  endDate: Yup.string().required('Este campo es requerido'),
   amountGuests: Yup.number().required('Este campo es requerido'),
 });
 
@@ -70,12 +61,6 @@ const BookingsCreate = () => {
     actions.setSubmitting(false);
   };
 
-  const convertToDate = (dateString: string) => {
-    const d = dateString.split('/');
-    const date = new Date(d[1] + '/' + d[0] + '/' + d[2]);
-    return date;
-  };
-
   return (
     <Formik
       initialValues={{
@@ -87,8 +72,8 @@ const BookingsCreate = () => {
       }}
       validationSchema={CreateBookingSchema}
       onSubmit={(values, actions) => {
-        const startDate = convertToDate(values.startDate);
-        const endDate = convertToDate(values.endDate);
+        const startDate = new Date(values.startDate);
+        const endDate = new Date(values.endDate);
         const booking = {
           bookingNumber: values.bookingNumber,
           surname: values.surname,
@@ -106,6 +91,7 @@ const BookingsCreate = () => {
     >
       {props => (
         <Form>
+          {console.log(props.values)}
           <PageTitle label='Crear reserva' />
           <Field name='bookingNumber'>
             {({ field, form }: any) => (
@@ -143,7 +129,12 @@ const BookingsCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='startDate'> Fecha Ingreso </FormLabel>
-                <Input {...field} id='startDate' placeholder='dd/mm/aaaa' />
+                <Input
+                  {...field}
+                  id='startDate'
+                  placeholder='dd/mm/aaaa'
+                  type={'date'}
+                />
                 <FormErrorMessage>{form.errors.startDate}</FormErrorMessage>
               </FormControl>
             )}
@@ -155,7 +146,12 @@ const BookingsCreate = () => {
                 mb={'5'}
               >
                 <FormLabel htmlFor='endDate'> Fecha Salida </FormLabel>
-                <Input {...field} id='endDate' placeholder='dd/mm/aaaa' />
+                <Input
+                  {...field}
+                  id='endDate'
+                  placeholder='dd/mm/aaaa'
+                  type={'date'}
+                />
                 <FormErrorMessage>{form.errors.endDate}</FormErrorMessage>
               </FormControl>
             )}
