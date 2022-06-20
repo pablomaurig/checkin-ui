@@ -18,8 +18,12 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../context/Auth.context';
 
 const CreateRoomSchema = Yup.object().shape({
-  name: Yup.string().required('Este campo es requerido'),
-  description: Yup.string().required('Este campo es requerido'),
+  name: Yup.string()
+    .max(100, 'Supera el máximo de 100 caracteres')
+    .required('Este campo es requerido'),
+  description: Yup.string()
+  .max(100, 'Supera el máximo de 100 caracteres')
+  .required('Este campo es requerido'),
   singleBeds: Yup.number().required('Este campo es requerido'),
   doubleBeds: Yup.number().required('Este campo es requerido'),
   floor: Yup.number().required('Este campo es requerido'),

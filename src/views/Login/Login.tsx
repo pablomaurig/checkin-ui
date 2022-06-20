@@ -32,7 +32,10 @@ const LoginUserSchema = Yup.object().shape({
   email: Yup.string()
     .email('Debe ser un correo electrónico válido')
     .required('Este campo es requerido'),
-  password: Yup.string().required('Este campo es requerido'),
+  password: Yup.string()
+    .min(6, 'Debe tener un mínimo de 6 caracteres')
+    .max(100, 'Puede tener un máximo de 100 caracteres')
+    .required('Este campo es requerido'),
 });
 
 const ResetPasswordSchema = Yup.object().shape({

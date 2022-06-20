@@ -38,8 +38,12 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
     guests: Yup.array()
       .of(
         Yup.object().shape({
-          firstName: Yup.string().required('Este campo es requerido'),
-          lastName: Yup.string().required('Este campo es requerido'),
+          firstName: Yup.string()
+            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
+          lastName: Yup.string()
+            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
           gender: Yup.string().required('Este campo es requerido'),
           dateOfBirth: Yup.string()
             .matches(
@@ -47,8 +51,12 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
               'Debe ingresar fecha con formato dd/mm/aaaa'
             )
             .required('Este campo es requerido'),
-          telephoneNumber: Yup.string().required('Este campo es requerido'),
-          country: Yup.string().required('Este campo es requerido'),
+          telephoneNumber: Yup.string()
+            .max(100, 'Supera el máximo de 100 caracteres')
+            .required('Este campo es requerido'),
+          country: Yup.string()
+            .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+            .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
           idCardFront: Yup.string()
             .required('Este campo es requerido')
             .nullable(),

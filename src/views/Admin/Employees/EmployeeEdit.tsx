@@ -23,8 +23,12 @@ import { updateEmployee } from '../../../services/employees.service';
 import { AuthContext } from '../../../context/Auth.context';
 
 const EmployeeEditSchema = Yup.object().shape({
-  firstName: Yup.string().required('Este campo es requerido'),
-  lastName: Yup.string().required('Este campo es requerido'),
+  firstName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
 });
 
 type EmployeeState = {
