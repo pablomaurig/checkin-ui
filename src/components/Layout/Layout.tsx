@@ -2,9 +2,8 @@ import { Box, Container, useDisclosure } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import Header from '../Header';
 import Nav from '../Nav';
-import React from 'react';
 
-const Layout = ({ children }: React.PropsWithChildren<React.ReactNode>) => {
+const Layout = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
   const PATHS_WITH_NO_LAYOUT = ['/login', '/registro', '/admin/login'];
