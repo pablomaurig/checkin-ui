@@ -43,7 +43,7 @@ import {
 } from '../../../services/bookings.service';
 import { Booking, Spent } from '../../../types/booking.types';
 import { AuthContext } from '../../../context/Auth.context';
-import { getRooms } from '../../../services/rooms.service';
+import { getRoomByBookingId, getRooms } from '../../../services/rooms.service';
 import { Room } from '../../../types/rooms.types';
 import { Field, Form, Formik } from 'formik';
 
@@ -65,6 +65,7 @@ const Bookings = () => {
   const [bookingId, setBookingId] = useState<number | null>(null);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [spents, setSpents] = useState<Spent[]>([]);
+  const [asignableRooms, setAsignableRooms] = useState<any>({});
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(false);
   const cancelRef = React.useRef<HTMLButtonElement>(null);
@@ -136,6 +137,18 @@ const Bookings = () => {
     if (user) {
       const reservas = await getBookings(user.token);
       setBookings(reservas);
+      reservas.forEach(async (booking: Booking) => {
+        try {
+          const response = await getRoomByBookingId(booking.id, user.token);
+          const rooms = await response.json();
+          setAsignableRooms((prevState: any) => ({
+            ...prevState,
+            [booking.id]: rooms,
+          }));
+        } catch (error) {
+          console.error(error);
+        }
+      });
     }
   };
 
@@ -274,67 +287,80 @@ const Bookings = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {bookings.map(booking => (
-              <Tr key={booking.id}>
-                <Td>{booking.bookingNumber}</Td>
-                <Td>{booking.surname}</Td>
-                <Td>
-                  <Select
-                    placeholder={
-                      booking.roomId
-                        ? rooms.find(room => room.id === booking.roomId)?.name
-                        : 'Sin asignar'
-                    }
-                    size='sm'
-                    onChange={event =>
-                      handleBookingRoomUpdate(booking.id, event)
-                    }
-                  >
-                    {rooms.map(room => (
-                      <option key={room.id} value={room.id}>
-                        {room.name}
-                      </option>
-                    ))}
-                  </Select>
-                </Td>
-                <Td>{new Date(booking.startDate).toLocaleDateString('es')}</Td>
-                <Td>{new Date(booking.endDate).toLocaleDateString('es')}</Td>
-                <Td>{booking.amountGuests}</Td>
-                <Td>{booking.state} </Td>
-                <Td isNumeric>
-                  <Button
-                    title='Cancelar Reserva'
-                    onClick={() => handleCancel(booking.id)}
-                    px={2}
-                    rounded={'full'}
-                  >
-                    <Icon as={MdCancel} />
-                  </Button>
-                  {booking.roomId !== null && booking.checkIn !== null && (
-                    <>
-                      <Button
-                        title='Agregar gasto'
-                        onClick={() => handleExpense(booking.id)}
-                        ml={'2'}
-                        px={2}
-                        rounded={'full'}
+            {bookings.map(booking => {
+              // getAsignableRooms(booking.id);
+
+              return (
+                <Tr key={booking.id}>
+                  <Td>{booking.bookingNumber}</Td>
+                  <Td>{booking.surname}</Td>
+                  <Td>
+                    {asignableRooms && asignableRooms[booking.id] ? (
+                      <Select
+                        placeholder={
+                          booking.roomId
+                            ? rooms.find(room => room.id === booking.roomId)
+                                ?.name
+                            : 'Sin asignar'
+                        }
+                        size='sm'
+                        onChange={event =>
+                          handleBookingRoomUpdate(booking.id, event)
+                        }
                       >
-                        <Icon as={FaCartPlus} />
-                      </Button>
-                      <Button
-                        title='Realizar checkout'
-                        onClick={() => handleCheckOut(booking.id)}
-                        ml={'2'}
-                        px={2}
-                        rounded={'full'}
-                      >
-                        <Icon as={MdExitToApp} />
-                      </Button>
-                    </>
-                  )}
-                </Td>
-              </Tr>
-            ))}
+                        {asignableRooms[booking.id].map((room: any) => (
+                          <option key={room.id} value={room.id}>
+                            {room.name}
+                          </option>
+                        ))}
+                      </Select>
+                    ) : (
+                      <div>
+                        No se pueden asignar habitaciones a esta reserva
+                      </div>
+                    )}
+                  </Td>
+                  <Td>
+                    {new Date(booking.startDate).toLocaleDateString('es')}
+                  </Td>
+                  <Td>{new Date(booking.endDate).toLocaleDateString('es')}</Td>
+                  <Td>{booking.amountGuests}</Td>
+                  <Td>{booking.state} </Td>
+                  <Td isNumeric>
+                    <Button
+                      title='Cancelar Reserva'
+                      onClick={() => handleCancel(booking.id)}
+                      px={2}
+                      rounded={'full'}
+                    >
+                      <Icon as={MdCancel} />
+                    </Button>
+                    {booking.roomId !== null && booking.checkIn !== null && (
+                      <>
+                        <Button
+                          title='Agregar gasto'
+                          onClick={() => handleExpense(booking.id)}
+                          ml={'2'}
+                          px={2}
+                          rounded={'full'}
+                        >
+                          <Icon as={FaCartPlus} />
+                        </Button>
+                        <Button
+                          title='Realizar checkout'
+                          onClick={() => handleCheckOut(booking.id)}
+                          ml={'2'}
+                          px={2}
+                          rounded={'full'}
+                        >
+                          <Icon as={MdExitToApp} />
+                        </Button>
+                      </>
+                    )}
+                  </Td>
+                </Tr>
+              );
+            })}
           </Tbody>
         </Table>
       </TableContainer>

@@ -91,7 +91,6 @@ const BookingsCreate = () => {
     >
       {props => (
         <Form>
-          {console.log(props.values)}
           <PageTitle label='Crear reserva' />
           <Field name='bookingNumber'>
             {({ field, form }: any) => (
