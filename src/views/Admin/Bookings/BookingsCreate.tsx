@@ -19,7 +19,10 @@ import { createBooking } from '../../../services/bookings.service';
 
 const CreateBookingSchema = Yup.object().shape({
   bookingNumber: Yup.string().required('Este campo es requerido'),
-  surname: Yup.string().required('Este campo es requerido'),
+  surname: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres')
+    .required('Este campo es requerido'),
   startDate: Yup.string().required('Este campo es requerido'),
   endDate: Yup.string().required('Este campo es requerido'),
   amountGuests: Yup.number().required('Este campo es requerido'),

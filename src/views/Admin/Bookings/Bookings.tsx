@@ -48,7 +48,9 @@ import { Room } from '../../../types/rooms.types';
 import { Field, Form, Formik } from 'formik';
 
 const CreateSpentSchema = Yup.object().shape({
-  description: Yup.string().required('Este campo es requerido'),
+  description: Yup.string()
+    .max(100, 'Supera el máximo de 100 caracteres')
+    .required('Este campo es requerido'),
   amount: Yup.number()
     .typeError('Este campo solo acepta números')
     .min(0.1, 'Ingrese un monto válido')

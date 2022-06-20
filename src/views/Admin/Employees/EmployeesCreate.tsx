@@ -22,11 +22,19 @@ import { CreateEmployee, Employee } from '../../../types/employees.types';
 import { createEmployee } from '../../../services/employees.service';
 
 const CreateEmployeeSchema = Yup.object().shape({
-  firstName: Yup.string().required('Este campo es requerido'),
-  lastName: Yup.string().required('Este campo es requerido'),
-  email: Yup.string().required('Este campo es requerido'),
-  password: Yup.string().required('Este campo es requerido'),
+  firstName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
+  email: Yup.string().email('Debe ser un correo electrónico válido').required('Este campo es requerido'),
+  password: Yup.string()
+    .min(6, 'Debe tener un mínimo de 6 caracteres')
+    .max(100, 'Puede tener un máximo de 100 caracteres')
+    .required('Este campo es requerido'),
   repeatPassword: Yup.string()
+    .min(6, 'Debe tener un mínimo de 6 caracteres')
     .required('Este campo es requerido')
     .oneOf([Yup.ref('password'), null], 'Las password no coinciden'),
 });

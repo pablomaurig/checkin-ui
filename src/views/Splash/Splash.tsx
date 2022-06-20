@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/Auth.context';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
+import { Box, Image } from '@chakra-ui/react';
 
 interface CustomizedState {
   from: {
@@ -35,7 +35,12 @@ const Splash = () => {
       justifyContent={'center'}
       alignItems={'center'}
     >
-      <div>splash</div>
+      <Image
+        borderRadius='full'
+        boxSize='150px'
+        src='logo.png'
+        alt='Logo app'
+      />
     </Box>
   );
 };

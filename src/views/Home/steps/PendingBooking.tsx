@@ -13,7 +13,9 @@ import * as Yup from 'yup';
 import { GetBooking } from '../../../types/booking.types';
 
 const RequestBookingSchema = Yup.object().shape({
-  lastName: Yup.string().required('Este campo es requerido'),
+  lastName: Yup.string()
+    .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
+    .max(100, 'Supera el máximo de 100 caracteres').required('Este campo es requerido'),
   bookingNumber: Yup.string().required('Este campo es requerido'),
 });
 
