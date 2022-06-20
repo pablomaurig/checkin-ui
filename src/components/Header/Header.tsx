@@ -12,11 +12,16 @@ import {
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { MdClose, MdMenu, MdOutlineLogout } from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth.context';
 
 export default function Header({ onOpen, isOpen }: any) {
   const { logout, user } = useContext(AuthContext);
+
+  const location = useLocation();
+  if (location.pathname === '/admin') {
+    onOpen();
+  }
 
   return (
     <>
