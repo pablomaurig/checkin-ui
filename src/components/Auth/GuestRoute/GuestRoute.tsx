@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../../context/Auth.context';
 
-const GuerRoute = ({ children }: { children: JSX.Element }) => {
+const GuestRoute = ({ children }: { children: JSX.Element }) => {
   const { user } = useContext(AuthContext);
   const location = useLocation();
 
@@ -13,4 +13,4 @@ const GuerRoute = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
-export default GuerRoute;
+export default GuestRoute;

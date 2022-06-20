@@ -6,7 +6,12 @@ import Nav from '../Nav';
 const Layout = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
-  const PATHS_WITH_NO_LAYOUT = ['/login', '/registro', '/admin/login'];
+  const PATHS_WITH_NO_LAYOUT = [
+    '/splash',
+    '/login',
+    '/registro',
+    '/admin/login',
+  ];
 
   if (PATHS_WITH_NO_LAYOUT.includes(location.pathname)) {
     return <main>{children}</main>;

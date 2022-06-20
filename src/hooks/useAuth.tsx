@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { User } from '../types/user.types';
 
 export const useAuth = () => {
+  const [splash, setSplash] = useState(true);
   const [user, setUser] = useState<User | null>(() => {
     const user = localStorage.getItem('user');
 
@@ -23,5 +24,9 @@ export const useAuth = () => {
     localStorage.setItem('user', JSON.stringify(user));
   };
 
-  return { user, login, logout, updateUser };
+  const updateSplash = () => {
+    setSplash(false);
+  };
+
+  return { user, splash, login, logout, updateUser, updateSplash };
 };
