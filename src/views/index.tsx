@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-// import RouteWithPermissions from '../components/Auth/RouteWithPermissions';
 import Layout from '../components/Layout';
 import Admin from './Admin';
 import Checkin from './Checkin';
@@ -21,37 +20,53 @@ import EmployeesCreate from './Admin/Employees/EmployeesCreate';
 import EmployeeEdit from './Admin/Employees/EmployeeEdit';
 import RoomsEdit from './Admin/Rooms/RoomsEdit';
 import BookingsCreate from './Admin/Bookings/BookingsCreate';
+import Splash from './Splash';
+import SplashRoute from './Splash/SplashRoute';
 
 const Root = () => (
   <Layout>
     <Routes>
       <Route
-        path='login'
+        path='splash'
         element={
           <GuestRoute>
-            <Login />
+            <Splash />
           </GuestRoute>
+        }
+      />
+      <Route
+        path='login'
+        element={
+          <SplashRoute>
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          </SplashRoute>
         }
       />
       <Route
         path='registro'
         element={
-          <GuestRoute>
-            <Register />
-          </GuestRoute>
+          <SplashRoute>
+            <GuestRoute>
+              <Register />
+            </GuestRoute>
+          </SplashRoute>
         }
       />
       <Route
         path='/'
         element={
-          <RequireAuth>
-            <RouteWithPermissions
-              fallback='/admin'
-              requiredPermissions={[Permissions.customer]}
-            >
-              <Home />
-            </RouteWithPermissions>
-          </RequireAuth>
+          <SplashRoute>
+            <RequireAuth>
+              <RouteWithPermissions
+                fallback='/admin'
+                requiredPermissions={[Permissions.customer]}
+              >
+                <Home />
+              </RouteWithPermissions>
+            </RequireAuth>
+          </SplashRoute>
         }
       />
       <Route
@@ -89,14 +104,16 @@ const Root = () => (
       <Route
         path='admin'
         element={
-          <RequireAuth>
-            <RouteWithPermissions
-              fallback='/'
-              requiredPermissions={[Permissions.admin, Permissions.employee]}
-            >
-              <Admin />
-            </RouteWithPermissions>
-          </RequireAuth>
+          <SplashRoute url='admin'>
+            <RequireAuth>
+              <RouteWithPermissions
+                fallback='/'
+                requiredPermissions={[Permissions.admin, Permissions.employee]}
+              >
+                <Admin />
+              </RouteWithPermissions>
+            </RequireAuth>
+          </SplashRoute>
         }
       >
         <Route path='encuestas' element={<Surveys />} />
@@ -113,9 +130,11 @@ const Root = () => (
       <Route
         path='admin/login'
         element={
-          <GuestRoute>
-            <Login />
-          </GuestRoute>
+          <SplashRoute url='/admin/login'>
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          </SplashRoute>
         }
       />
       <Route
