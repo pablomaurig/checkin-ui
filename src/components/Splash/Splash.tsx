@@ -1,19 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/Auth.context';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Box, Image } from '@chakra-ui/react';
+import logo from '../../assets/logo.png';
 
-interface CustomizedState {
-  from: {
-    pathname: string;
-  };
-}
-
-const Splash = () => {
+const Splash = ({ url = '/' }: { url: string }) => {
   const { splash, updateSplash } = useContext(AuthContext);
-  const location = useLocation();
-  const state = location.state as CustomizedState;
-  const from = state?.from?.pathname || '/';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,22 +17,24 @@ const Splash = () => {
   }, []);
 
   if (!splash) {
-    return <Navigate to={from} />;
+    return <Navigate to={url} />;
   }
 
   return (
     <Box
-      h='100vh'
       display={'flex'}
       justifyContent={'center'}
       alignItems={'center'}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#fff',
+      }}
     >
-      <Image
-        borderRadius='full'
-        boxSize='150px'
-        src='logo.png'
-        alt='Logo app'
-      />
+      <Image borderRadius='full' boxSize='100px' src={logo} alt='VisitAR' />
     </Box>
   );
 };

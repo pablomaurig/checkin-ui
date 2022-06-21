@@ -20,20 +20,11 @@ import EmployeesCreate from './Admin/Employees/EmployeesCreate';
 import EmployeeEdit from './Admin/Employees/EmployeeEdit';
 import RoomsEdit from './Admin/Rooms/RoomsEdit';
 import BookingsCreate from './Admin/Bookings/BookingsCreate';
-import Splash from './Splash';
-import SplashRoute from './Splash/SplashRoute';
+import SplashRoute from '../components/Splash/SplashRoute';
 
 const Root = () => (
   <Layout>
     <Routes>
-      <Route
-        path='splash'
-        element={
-          <GuestRoute>
-            <Splash />
-          </GuestRoute>
-        }
-      />
       <Route
         path='login'
         element={
