@@ -21,6 +21,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/Auth.context';
 import HasPermission from '../Auth/HasPermission';
 import { Permissions } from '../../types/user.types';
+import InstallPWA from '../InstallPWA';
 
 const Nav = ({ isOpen, onClose }: any) => {
   const { logout } = useContext(AuthContext);
@@ -329,6 +330,7 @@ const Nav = ({ isOpen, onClose }: any) => {
             </Box>
           </HasPermission>
 
+          <InstallPWA />
           <Divider my={'3'} />
           <Button
             variant='link'
