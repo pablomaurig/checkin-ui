@@ -4,6 +4,13 @@ export type UserRole = 'customer' | 'employee' | 'admin';
 export interface User {
   email: string;
   role: UserRole;
+  bookingId: string | null;
+  createdAt: string;
+  firstName: string | null;
+  id: number;
+  lastName: string | null;
+  updatedAt: string;
+  token: string;
 }
 
 export enum Permissions {

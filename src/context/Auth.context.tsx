@@ -6,12 +6,15 @@ interface AuthContextType {
   user: User | null;
   login: ({ email, role }: User) => void;
   logout: () => void;
+  updateUser: (user: User) => void;
+  splash: boolean;
+  updateSplash: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: any) => {
-  const { user, login, logout } = useAuth();
+  const { user, splash, login, logout, updateUser, updateSplash } = useAuth();
 
   return (
     <AuthContext.Provider
@@ -19,6 +22,9 @@ export const AuthProvider = ({ children }: any) => {
         user: user,
         login,
         logout,
+        updateUser,
+        splash: splash,
+        updateSplash,
       }}
     >
       {children}

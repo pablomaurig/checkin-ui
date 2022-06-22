@@ -1,24 +1,42 @@
-import { useDisclosure } from '@chakra-ui/react';
+import { Box, Container, useDisclosure } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import Header from '../Header';
 import Nav from '../Nav';
-import React from 'react';
 
-const Layout = ({ children }: React.PropsWithChildren<React.ReactNode>) => {
+const Layout = ({ children }: any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
-  const PATHS_WITH_NO_LAYOUT = ['/login', '/registro', '/admin/login'];
+  const PATHS_WITH_NO_LAYOUT = [
+    '/splash',
+    '/login',
+    '/registro',
+    '/admin/login',
+  ];
 
   if (PATHS_WITH_NO_LAYOUT.includes(location.pathname)) {
     return <main>{children}</main>;
   }
 
   return (
-    <div className='App'>
+    <Box
+      className='App'
+      minH={'100vh'}
+      display={'flex'}
+      flexDirection={'column'}
+    >
       <Header isOpen={isOpen} onOpen={onOpen} />
       <Nav isOpen={isOpen} onClose={onClose} />
-      <main>{children}</main>
-    </div>
+      <Container
+        as={'main'}
+        maxW='container.xl'
+        py={6}
+        flex={'1'}
+        display={'flex'}
+        flexDirection={'column'}
+      >
+        {children}
+      </Container>
+    </Box>
   );
 };
 

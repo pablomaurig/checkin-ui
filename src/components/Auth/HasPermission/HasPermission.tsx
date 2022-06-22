@@ -9,9 +9,6 @@ const HasPermission = ({
   const { user } = useContext(AuthContext);
   let authorized = false;
 
-  console.log('rol de usuario: ', user?.role);
-  console.log('permisos: ', requiredPermissions);
-
   if (requiredPermissions.length) {
     const hasPermission = requiredPermissions.find(
       (permission: string): boolean => {

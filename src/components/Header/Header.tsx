@@ -1,30 +1,27 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
   Stack,
   useColorModeValue,
-  useBreakpointValue,
-  useColorMode,
   Link,
   Icon,
+  Image,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
-import {
-  MdClose,
-  MdOutlineWbSunny,
-  MdDarkMode,
-  MdMenu,
-  MdOutlineLogout,
-} from 'react-icons/md';
-import { NavLink } from 'react-router-dom';
+import { MdClose, MdMenu, MdOutlineLogout } from 'react-icons/md';
+import { NavLink, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../context/Auth.context';
+import logo from '../../assets/visitar-logo.png';
 
 export default function Header({ onOpen, isOpen }: any) {
-  const { colorMode, toggleColorMode } = useColorMode();
   const { logout, user } = useContext(AuthContext);
+
+  const location = useLocation();
+  if (location.pathname === '/admin') {
+    onOpen();
+  }
 
   return (
     <>
@@ -40,13 +37,11 @@ export default function Header({ onOpen, isOpen }: any) {
           borderColor={useColorModeValue('gray.200', 'gray.900')}
           align={'center'}
         >
-          <Flex
-            flex={{ base: 1, md: 'auto' }}
-            ml={{ base: -2 }}
-            // display={{ base: 'flex', md: 'none' }}
-          >
+          <Flex flex={{ base: 1, md: 'auto' }} ml={{ base: -2 }}>
             <IconButton
+              className='menu'
               onClick={onOpen}
+              disabled={user?.role === 'customer'}
               icon={
                 isOpen ? (
                   <Icon as={MdClose} w={3} h={3} />
@@ -58,40 +53,23 @@ export default function Header({ onOpen, isOpen }: any) {
               aria-label={'Toggle Navigation'}
             />
           </Flex>
-          <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}
+          <Flex flex={{ base: 1 }} justify={{ base: 'center' }}>
+            <Link
+              as={NavLink}
+              to='/'
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
             >
-              <Link
-                as={NavLink}
-                to='/'
-                style={{ textDecoration: 'none' }}
-                _focus={{ boxShadow: 'none' }}
-              >
-                Logo
-              </Link>
-            </Text>
+              <Image src={logo} height='40px' />
+            </Link>
           </Flex>
 
           <Stack
-            flex={{ base: 1, md: 0 }}
+            flex={{ base: 1 }}
             justify={'flex-end'}
             direction={'row'}
             spacing={6}
           >
-            <Button
-              onClick={toggleColorMode}
-              variant={'link'}
-              _focus={{ boxShadow: 'none' }}
-            >
-              {colorMode === 'light' ? (
-                <Icon as={MdDarkMode} />
-              ) : (
-                <Icon as={MdOutlineWbSunny} />
-              )}
-            </Button>
             {user && (
               <Button
                 onClick={() => {
