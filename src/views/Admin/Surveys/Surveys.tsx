@@ -43,9 +43,9 @@ const Surveys = () => {
             <Tr>
               <Th>Fecha</Th>
               <Th>Booking id</Th>
-              <Th>Encuesta 1</Th>
-              <Th>Encuesta 2</Th>
-              <Th>Encuesta 3</Th>
+              <Th>Atención</Th>
+              <Th>Limpieza</Th>
+              <Th>Alojamiento</Th>
             </Tr>
           </Thead>
           <Tbody>
