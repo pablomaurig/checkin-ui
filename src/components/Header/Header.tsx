@@ -1,12 +1,10 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
   Button,
   Stack,
   useColorModeValue,
-  useBreakpointValue,
   Link,
   Icon,
   Image,
@@ -55,25 +53,19 @@ export default function Header({ onOpen, isOpen }: any) {
               aria-label={'Toggle Navigation'}
             />
           </Flex>
-          <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-            <Text
-              textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-              fontFamily={'heading'}
-              color={useColorModeValue('gray.800', 'white')}
+          <Flex flex={{ base: 1 }} justify={{ base: 'center' }}>
+            <Link
+              as={NavLink}
+              to='/'
+              style={{ textDecoration: 'none' }}
+              _focus={{ boxShadow: 'none' }}
             >
-              <Link
-                as={NavLink}
-                to='/'
-                style={{ textDecoration: 'none' }}
-                _focus={{ boxShadow: 'none' }}
-              >
-                <Image src={logo} height='40px' />
-              </Link>
-            </Text>
+              <Image src={logo} height='40px' />
+            </Link>
           </Flex>
 
           <Stack
-            flex={{ base: 1, md: 0 }}
+            flex={{ base: 1 }}
             justify={'flex-end'}
             direction={'row'}
             spacing={6}
