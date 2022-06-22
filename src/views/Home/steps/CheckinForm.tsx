@@ -31,8 +31,8 @@ interface BookingProps {
 export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
   const toast = useToast();
   const { id: bookingId, amountGuests, startDate, endDate, surname } = booking;
-  const formatedStartDate = new Date(startDate).toLocaleDateString('es');
-  const formatedEndDate = new Date(endDate).toLocaleDateString('es');
+  const formatedStartDate = new Date(startDate).toLocaleDateString('es-AR');
+  const formatedEndDate = new Date(endDate).toLocaleDateString('es-AR');
 
   const checkinSchema = Yup.object().shape({
     guests: Yup.array()

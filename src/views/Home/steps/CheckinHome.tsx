@@ -51,8 +51,13 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
     onOpen: onFinishOpen,
     onClose: onFinishClose,
   } = useDisclosure();
+  const dayToday = new Date();
   const bookingEndDate = new Date(booking?.endDate as string);
-  const todayDate = new Date();
+  const threeDaysBefore = new Date(
+    bookingEndDate.getFullYear(),
+    bookingEndDate.getMonth(),
+    bookingEndDate.getDate() - 3
+  );
 
   const handleSurvey = () => {
     onSurveyOpen();
@@ -264,13 +269,13 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
             <Text as={'span'} fontWeight={'bold'}>
               Fecha de ingreso:{' '}
             </Text>
-            {new Date(booking.startDate).toLocaleDateString('es')}
+            {new Date(booking.startDate).toLocaleDateString('es-AR')}
           </ListItem>
           <ListItem>
             <Text as={'span'} fontWeight={'bold'}>
               Fecha de egreso:{' '}
             </Text>
-            {new Date(booking.endDate).toLocaleDateString('es')}
+            {new Date(booking.endDate).toLocaleDateString('es-AR')}
           </ListItem>
           {booking.roomId !== null && spents !== null && spents.length > 0 && (
             <>
@@ -308,7 +313,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
             </>
           )}
         </List>
-        {bookingEndDate <= todayDate && (
+        {dayToday >= threeDaysBefore && (
           <Button onClick={handleCheckout}>Realizar checkout</Button>
         )}
         <Modal

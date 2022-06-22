@@ -321,9 +321,11 @@ const Bookings = () => {
                     )}
                   </Td>
                   <Td>
-                    {new Date(booking.startDate).toLocaleDateString('es')}
+                    {new Date(booking.startDate).toLocaleDateString('es-AR')}
                   </Td>
-                  <Td>{new Date(booking.endDate).toLocaleDateString('es')}</Td>
+                  <Td>
+                    {new Date(booking.endDate).toLocaleDateString('es-AR')}
+                  </Td>
                   <Td>{booking.amountGuests}</Td>
                   <Td>{booking.state} </Td>
                   <Td isNumeric>
