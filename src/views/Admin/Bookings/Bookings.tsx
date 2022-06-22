@@ -337,28 +337,30 @@ const Bookings = () => {
                     >
                       <Icon as={MdCancel} />
                     </Button>
-                    {booking.roomId !== null && booking.checkIn !== null && (
-                      <>
-                        <Button
-                          title='Agregar gasto'
-                          onClick={() => handleExpense(booking.id)}
-                          ml={'2'}
-                          px={2}
-                          rounded={'full'}
-                        >
-                          <Icon as={FaCartPlus} />
-                        </Button>
-                        <Button
-                          title='Realizar checkout'
-                          onClick={() => handleCheckOut(booking.id)}
-                          ml={'2'}
-                          px={2}
-                          rounded={'full'}
-                        >
-                          <Icon as={MdExitToApp} />
-                        </Button>
-                      </>
-                    )}
+                    {booking.roomId !== null &&
+                      booking.checkIn !== null &&
+                      booking.checkOut === null && (
+                        <>
+                          <Button
+                            title='Agregar gasto'
+                            onClick={() => handleExpense(booking.id)}
+                            ml={'2'}
+                            px={2}
+                            rounded={'full'}
+                          >
+                            <Icon as={FaCartPlus} />
+                          </Button>
+                          <Button
+                            title='Realizar checkout'
+                            onClick={() => handleCheckOut(booking.id)}
+                            ml={'2'}
+                            px={2}
+                            rounded={'full'}
+                          >
+                            <Icon as={MdExitToApp} />
+                          </Button>
+                        </>
+                      )}
                   </Td>
                 </Tr>
               );

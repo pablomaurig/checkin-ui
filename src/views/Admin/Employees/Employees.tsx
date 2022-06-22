@@ -23,6 +23,7 @@ import {
   getEmployees,
 } from '../../../services/employees.service';
 import { Employee } from '../../../types/employees.types';
+import { UserRole } from '../../../types/user.types';
 
 const Employees = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -83,6 +84,19 @@ const Employees = () => {
     onClose();
   };
 
+  const translateRole = (role: UserRole) => {
+    switch (role) {
+      case 'admin':
+        return 'Administrador';
+      case 'employee':
+        return 'Empleado';
+      case 'customer':
+        return 'Cliente';
+      default:
+        return 'Rol desconocido';
+    }
+  };
+
   return (
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
@@ -110,9 +124,17 @@ const Employees = () => {
                 <Td>{employee.firstName}</Td>
                 <Td>{employee.lastName}</Td>
                 <Td>{employee.email}</Td>
-                <Td>{employee.role}</Td>
-                <Td>{employee.createdAt}</Td>
-                <Td>{employee.updatedAt}</Td>
+                <Td>{translateRole(employee.role as UserRole)}</Td>
+                <Td>
+                  {new Date(employee.createdAt as string).toLocaleDateString(
+                    'es-AR'
+                  )}
+                </Td>
+                <Td>
+                  {new Date(employee.updatedAt as string).toLocaleDateString(
+                    'es-AR'
+                  )}
+                </Td>
                 <Td isNumeric>
                   <Button
                     onClick={() => handleDelete(employee.id as number)}
