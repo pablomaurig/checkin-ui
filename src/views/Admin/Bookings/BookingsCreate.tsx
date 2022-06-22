@@ -17,16 +17,35 @@ import { AuthContext } from '../../../context/Auth.context';
 import { CreateBooking } from '../../../types/booking.types';
 import { createBooking } from '../../../services/bookings.service';
 
+// function formatDate(date) {
+//   return new Date(date).toLocaleDateString()
+// }
+
 const CreateBookingSchema = Yup.object().shape({
   bookingNumber: Yup.string().required('Este campo es requerido'),
   surname: Yup.string()
     .matches(/^[a-zA-Z]+$/, 'Sólo puede ingresar caracteres alfabéticos')
     .max(100, 'Supera el máximo de 100 caracteres')
     .required('Este campo es requerido'),
-  startDate: Yup.string().required('Este campo es requerido'),
-  endDate: Yup.string().required('Este campo es requerido'),
+  startDate: Yup.date().required('Este campo es requerido'),
+  endDate: Yup.date()
+    .when('startDate', (startDate, schema) => {
+      if (startDate && schema.min(startDate)) {
+        return schema.min(
+          startDate,
+          'La fecha de salida debe ser mayor a la fecha de ingreso'
+        );
+      }
+    })
+    .required('Este campo es requerido'),
   amountGuests: Yup.number().required('Este campo es requerido'),
 });
+// min(
+//   Yup.ref('originalEndDate'),
+//   ({ min }) => `Date needs to be before ${formatDate(min)}!!`,
+// )
+// .required('Este campo es requerido'),
+//   .typeError('La fecha de salida debe ser mayor a la fecha de ingreso')
 
 const BookingsCreate = () => {
   const toast = useToast();
@@ -133,6 +152,7 @@ const BookingsCreate = () => {
                   id='startDate'
                   placeholder='dd/mm/aaaa'
                   type={'date'}
+                  min={new Date().toISOString().split('T')[0]}
                 />
                 <FormErrorMessage>{form.errors.startDate}</FormErrorMessage>
               </FormControl>
@@ -150,6 +170,7 @@ const BookingsCreate = () => {
                   id='endDate'
                   placeholder='dd/mm/aaaa'
                   type={'date'}
+                  min={new Date().toISOString().split('T')[0]}
                 />
                 <FormErrorMessage>{form.errors.endDate}</FormErrorMessage>
               </FormControl>
