@@ -96,6 +96,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           );
           if (response.status === 200) {
             setCheckoutDone(true);
+            onFinishOpen();
           } else {
             onOpen();
           }
