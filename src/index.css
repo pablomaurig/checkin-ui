@@ -22,6 +22,10 @@ code {
     monospace;
 }
 
+.menu:disabled{
+  opacity: 0!important;
+}
+
 .App{
   min-height: 100vh;
   min-height: fill-available;

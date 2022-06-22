@@ -43,15 +43,17 @@ const Surveys = () => {
             <Tr>
               <Th>Fecha</Th>
               <Th>Booking id</Th>
-              <Th>Encuesta 1</Th>
-              <Th>Encuesta 2</Th>
-              <Th>Encuesta 3</Th>
+              <Th>Atención</Th>
+              <Th>Limpieza</Th>
+              <Th>Alojamiento</Th>
             </Tr>
           </Thead>
           <Tbody>
             {surveys.map(survey => (
               <Tr key={survey.id}>
-                <Td>{survey.createdAt}</Td>
+                <Td>
+                  {new Date(`${survey.createdAt}`).toLocaleDateString('es-Ar')}
+                </Td>
                 <Td>{survey.bookingId}</Td>
                 <Td>{survey.answer1}</Td>
                 <Td>{survey.answer2}</Td>

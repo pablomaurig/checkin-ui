@@ -1,3 +1,5 @@
+import { Room } from './rooms.types';
+
 /* eslint-disable no-unused-vars */
 export enum BookingStateMock {
   Initial,
@@ -29,6 +31,7 @@ export interface Booking {
   enable: boolean;
   createdAt: string;
   UpdatedAt: string;
+  room?: Room;
 }
 
 export interface GetBooking {
