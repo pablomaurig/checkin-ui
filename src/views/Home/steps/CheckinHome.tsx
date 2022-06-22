@@ -213,10 +213,34 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           <hr />
           <ListItem>
             <Text as={'span'} fontWeight={'bold'}>
+              Número de reserva:{' '}
+            </Text>
+            {booking.bookingNumber}
+          </ListItem>
+          <ListItem>
+            <Text as={'span'} fontWeight={'bold'}>
               Habitación:{' '}
             </Text>
-            {booking.roomId}
+            {booking.roomId
+              ? booking.room?.name
+              : 'No cuenta con habitación asignada aún'}
           </ListItem>
+          {booking.roomId && (
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Camas simples:{' '}
+              </Text>
+              {booking.room?.singleBeds}
+            </ListItem>
+          )}
+          {booking.roomId && (
+            <ListItem>
+              <Text as={'span'} fontWeight={'bold'}>
+                Camas dobles:{' '}
+              </Text>
+              {booking.room?.doubleBeds}
+            </ListItem>
+          )}
           <ListItem>
             <Text as={'span'} fontWeight={'bold'}>
               Red de Wifi:{' '}
