@@ -14,7 +14,6 @@ import Bookings from './Admin/Bookings';
 import Rooms from './Admin/Rooms';
 import Employees from './Admin/Employees';
 import Hotel from './Hotel';
-import Configuration from './Configuration';
 import RoomsCreate from './Admin/Rooms/RoomsCreate';
 import EmployeesCreate from './Admin/Employees/EmployeesCreate';
 import EmployeeEdit from './Admin/Employees/EmployeeEdit';
@@ -81,14 +80,6 @@ const Root = () => (
         element={
           <RequireAuth>
             <Hotel />
-          </RequireAuth>
-        }
-      />
-      <Route
-        path='configuracion'
-        element={
-          <RequireAuth>
-            <Configuration />
           </RequireAuth>
         }
       />

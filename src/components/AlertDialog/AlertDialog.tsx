@@ -31,11 +31,11 @@ const AlertDialog = ({
       <AlertDialogOverlay>
         <AlertDialogContent>
           {tipo === 'cancelar' ? (
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize='lg' fontWeight='300'>
               Cancelar {label}
             </AlertDialogHeader>
           ) : (
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize='lg' fontWeight='300'>
               Eliminar {label}
             </AlertDialogHeader>
           )}

@@ -54,6 +54,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
             .required('Este campo es requerido'),
           gender: Yup.string().required('Este campo es requerido'),
           telephoneNumber: Yup.string()
+            .min(10, 'El número telefónico debe tener 10 dígitos como mínimo')
             .max(100, 'Supera el máximo de 100 caracteres')
             .required('Este campo es requerido'),
           country: Yup.string()
@@ -148,7 +149,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
           }}
           hidden
         />
-        <Button
+        <Button bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
           onClick={() => {
             fileFrontRef.current?.click();
           }}
@@ -400,6 +401,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
                     {props.values.guests.length < amountGuests && (
                       <Button
                         mb={'5'}
+                        bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
                         leftIcon={<Icon as={IoPersonAddSharp} />}
                         size='xs'
                         onClick={() =>
@@ -438,8 +440,9 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
                 width={'full'}
                 isLoading={props.isSubmitting}
                 type='submit'
+                bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
               >
-                Cargar checkin
+                Cargar Check-In
               </Button>
             </Form>
           )}

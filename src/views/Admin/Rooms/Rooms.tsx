@@ -103,7 +103,10 @@ const Rooms = () => {
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Habitaciones' />
-        <Button as={NavLink} to={'crear'} size='sm'>
+        <Button as={NavLink} to={'crear'} size='sm' bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+              _hover={{
+                bg: 'purple.400',
+              }}>
           Crear habitación
         </Button>
       </Flex>
@@ -121,7 +124,7 @@ const Rooms = () => {
         <Table size='sm'>
           <Thead>
             <Tr>
-              <Th>Numero de Habitación</Th>
+              <Th>Nombre de Habitación</Th>
               <Th>Piso</Th>
               <Th>Camas simples</Th>
               <Th>Camas dobles</Th>
@@ -139,7 +142,9 @@ const Rooms = () => {
                   <Button
                     onClick={() => handleDelete(room.id as number)}
                     px={2}
+                    mr={2}
                     rounded={'full'}
+                    bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
                   >
                     <Icon as={MdDelete} />
                   </Button>
@@ -149,6 +154,7 @@ const Rooms = () => {
                     state={{ room: room }}
                     px={2}
                     rounded={'full'}
+                    bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
                   >
                     <Icon as={MdOutlineListAlt} />
                   </Button>

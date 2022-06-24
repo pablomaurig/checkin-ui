@@ -268,7 +268,10 @@ const Bookings = () => {
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Reservas' />
-        <Button as={NavLink} to={'crear'} size='sm'>
+        <Button as={NavLink} to={'crear'} size='sm' bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+          _hover={{
+            bg: 'purple.400',
+          }}>
           Crear Reserva
         </Button>
       </Flex>
@@ -334,6 +337,7 @@ const Bookings = () => {
                       onClick={() => handleCancel(booking.id)}
                       px={2}
                       rounded={'full'}
+                      bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
                     >
                       <Icon as={MdCancel} />
                     </Button>
@@ -347,6 +351,7 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
+                            bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
                           >
                             <Icon as={FaCartPlus} />
                           </Button>
@@ -356,6 +361,7 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
+                            bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
                           >
                             <Icon as={MdExitToApp} />
                           </Button>
@@ -383,7 +389,7 @@ const Bookings = () => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize='lg' fontWeight='300'>
               Detalle de Cuenta:
             </AlertDialogHeader>
 
@@ -427,7 +433,7 @@ const Bookings = () => {
                 Cancelar
               </Button>
               <Button colorScheme='red' onClick={onCheckOutSubmit} ml={3}>
-                Realizar checkout
+                Realizar Check-Out
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -440,7 +446,7 @@ const Bookings = () => {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader fontSize='lg' fontWeight='300'>
               Agregar gasto a la cuenta:
             </AlertDialogHeader>
             <Formik
@@ -519,7 +525,7 @@ const Bookings = () => {
                       Cancelar
                     </Button>
                     <Button isLoading={props.isSubmitting} type='submit' ml={3}>
-                      Agregar gasto
+                      Agregar nuevo gasto
                     </Button>
                   </AlertDialogFooter>
                 </Form>

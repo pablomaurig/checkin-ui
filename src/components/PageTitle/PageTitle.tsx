@@ -7,7 +7,7 @@ interface PageTitleType {
 const PageTitle = ({ label }: PageTitleType) => (
   <Text
     fontSize={{ base: '16px', lg: '18px' }}
-    fontWeight={'500'}
+    fontWeight={'400'}
     textTransform={'uppercase'}
     mb={'4'}
   >

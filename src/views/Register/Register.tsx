@@ -10,13 +10,15 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
+  Image,
   FormErrorMessage,
   useToast,
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { createAccount } from '../../services/auth.service';
+import logo from '../../assets/visitar-logo.png';
+import bgImage from '../../assets/bg-image.jpg';
 
 const CreateAccountSchema = Yup.object().shape({
   email: Yup.string()
@@ -68,18 +70,26 @@ const Register = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      backgroundImage={`url(${bgImage})`} backgroundSize={'cover'}
     >
       <Stack spacing={8} mx={'auto'} maxW={'sm'} py={12} px={6} width={'lg'}>
-        <Stack align={'center'}>
-          <Heading fontSize={'2xl'}>Crear nuevo usuario</Heading>
-        </Stack>
         <Box
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
+          backgroundColor= 'rgba(253, 254, 254, 0.9)'
           boxShadow={'lg'}
           p={6}
         >
+        <Stack align={'center'} mb={5}>
+          <Link
+            as={NavLink}
+            to='/'
+            style={{ textDecoration: 'none' }}
+            _focus={{ boxShadow: 'none' }}
+          >
+            <Image src={logo} height='40px'/>
+          </Link>
+          <Heading fontSize={20}> ALTA NUEVO USUARIO </Heading>
+        </Stack>
           <Stack spacing={4}>
             <Formik
               initialValues={{
@@ -100,10 +110,8 @@ const Register = () => {
                         isInvalid={form.errors.email && form.touched.email}
                         mb={'5'}
                       >
-                        <FormLabel htmlFor='email'>
-                          Correo electrónico
-                        </FormLabel>
-                        <Input {...field} id='email' type='email' />
+                        <FormLabel htmlFor='email'> </FormLabel>
+                        <Input {...field} id='email' type='email' borderColor='purple.500' placeholder='Correo electrónico'/>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -116,8 +124,8 @@ const Register = () => {
                         }
                         mb={'5'}
                       >
-                        <FormLabel htmlFor='password'>Contraseña</FormLabel>
-                        <Input {...field} id='password' type='password' />
+                        <FormLabel htmlFor='password'> </FormLabel>
+                        <Input {...field} id='password' type='password' borderColor='purple.500' placeholder='Password'/>
                         <FormErrorMessage>
                           {form.errors.password}
                         </FormErrorMessage>
@@ -127,25 +135,24 @@ const Register = () => {
                   <Stack spacing={10}>
                     <Stack
                       direction={{ base: 'column', sm: 'row' }}
-                      align={'start'}
-                      justify={'space-between'}
+                      align={'center'}
+                      justify={'center'}
                     >
-                      <Text fontSize={'sm'}>
-                        <Link as={NavLink} to={'/login'} color={'blue.400'}>
-                          Iniciar sesión
+                      <Text fontSize={'sm'} fontWeight={'300'}>
+                        <Link as={NavLink} to={'/login'} color='purple.500'>
+                          INICIAR SESIÓN
                         </Link>
                       </Text>
                     </Stack>
                     <Button
                       isLoading={props.isSubmitting}
                       type='submit'
-                      bg={'blue.400'}
-                      color={'white'}
+                      bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
                       _hover={{
-                        bg: 'blue.500',
+                        bg: 'purple.400',
                       }}
                     >
-                      Crear cuenta
+                      CREAR CUENTA
                     </Button>
                   </Stack>
                 </Form>
