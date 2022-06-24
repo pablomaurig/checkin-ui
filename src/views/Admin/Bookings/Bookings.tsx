@@ -337,7 +337,10 @@ const Bookings = () => {
                       onClick={() => handleCancel(booking.id)}
                       px={2}
                       rounded={'full'}
-                      bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                      bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                      _hover={{
+                        bg: 'purpleC.200',
+                      }}
                     >
                       <Icon as={MdCancel} />
                     </Button>
@@ -351,7 +354,10 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
-                            bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                            bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                            _hover={{
+                              bg: 'purpleC.200',
+                            }}
                           >
                             <Icon as={FaCartPlus} />
                           </Button>
@@ -361,7 +367,10 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
-                            bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                            bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                            _hover={{
+                              bg: 'purpleC.200',
+                            }}
                           >
                             <Icon as={MdExitToApp} />
                           </Button>

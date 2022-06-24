@@ -144,7 +144,10 @@ const Employees = () => {
                     px={2}
                     rounded={'full'}
                     title={'Eliminar'}
-                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                      _hover={{
+                        bg: 'purpleC.200',
+                      }}
                   >
                     <Icon as={MdDelete} />
                   </Button>
@@ -156,7 +159,10 @@ const Employees = () => {
                     px={2}
                     rounded={'full'}
                     title={'Ver detalles'}
-                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    _hover={{
+                      bg: 'purpleC.200',
+                    }}
                   >
                     <Icon as={MdOutlineListAlt} />
                   </Button>

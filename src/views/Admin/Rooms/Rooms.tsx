@@ -144,7 +144,10 @@ const Rooms = () => {
                     px={2}
                     mr={2}
                     rounded={'full'}
-                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    _hover={{
+                      bg: 'purpleC.200',
+                    }}
                   >
                     <Icon as={MdDelete} />
                   </Button>
@@ -154,7 +157,10 @@ const Rooms = () => {
                     state={{ room: room }}
                     px={2}
                     rounded={'full'}
-                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    _hover={{
+                      bg: 'purpleC.200',
+                    }}
                   >
                     <Icon as={MdOutlineListAlt} />
                   </Button>
