@@ -149,7 +149,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
           }}
           hidden
         />
-        <Button bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+        <Button bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
           onClick={() => {
             fileFrontRef.current?.click();
           }}
@@ -401,7 +401,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
                     {props.values.guests.length < amountGuests && (
                       <Button
                         mb={'5'}
-                        bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                        bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                         leftIcon={<Icon as={IoPersonAddSharp} />}
                         size='xs'
                         onClick={() =>
@@ -440,7 +440,7 @@ export const CheckinForm = ({ booking, user, updateUser }: BookingProps) => {
                 width={'full'}
                 isLoading={props.isSubmitting}
                 type='submit'
-                bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
               >
                 Cargar Check-In
               </Button>

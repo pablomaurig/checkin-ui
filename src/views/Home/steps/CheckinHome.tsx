@@ -137,7 +137,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           </Box>
         </ModalBody>
         <ModalFooter justifyContent={'center'}>
-          <Button onClick={() => handleFinishSurvey(surveys)} bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'>
+          <Button onClick={() => handleFinishSurvey(surveys)} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>
             Finalizar encuesta
           </Button>
         </ModalFooter>
@@ -362,7 +362,11 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           )}
         </List>
         {dayToday >= threeDaysBefore && (
-          <Button onClick={handleCheckout} bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'>Realizar Check-Out</Button>
+          <Button onClick={handleCheckout} bg='purpleC.300' color= 'purpleC.700' border='1px' 
+          borderColor = 'purpleC.600'
+          _hover={{
+            bg: 'purpleC.400',
+          }}> Realizar Check-Out </Button>
         )}
         <Modal
           onClose={onSurveyClose}
@@ -396,7 +400,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
                 </Text>
               </ModalBody>
               <ModalFooter justifyContent={'center'}>
-                <Button onClick={handleSurvey} bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'>Realizar encuesta</Button>
+                <Button onClick={handleSurvey} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>Realizar encuesta</Button>
               </ModalFooter>
             </>
           </ModalContent>
@@ -417,7 +421,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
               </Text>
             </ModalBody>
             <ModalFooter justifyContent={'center'}>
-              <Button onClick={onFinishClose} bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'>Cerrar</Button>
+              <Button onClick={onFinishClose} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>Cerrar</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

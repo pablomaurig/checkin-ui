@@ -268,9 +268,9 @@ const Bookings = () => {
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Reservas' />
-        <Button as={NavLink} to={'crear'} size='sm' bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+        <Button as={NavLink} to={'crear'} size='sm' bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
           _hover={{
-            bg: 'purple.400',
+            bg: 'purpleC.400',
           }}>
           Crear Reserva
         </Button>
@@ -337,7 +337,7 @@ const Bookings = () => {
                       onClick={() => handleCancel(booking.id)}
                       px={2}
                       rounded={'full'}
-                      bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                      bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                     >
                       <Icon as={MdCancel} />
                     </Button>
@@ -351,7 +351,7 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
-                            bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                            bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                           >
                             <Icon as={FaCartPlus} />
                           </Button>
@@ -361,7 +361,7 @@ const Bookings = () => {
                             ml={'2'}
                             px={2}
                             rounded={'full'}
-                            bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                            bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                           >
                             <Icon as={MdExitToApp} />
                           </Button>

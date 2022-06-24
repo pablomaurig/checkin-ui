@@ -103,9 +103,9 @@ const Rooms = () => {
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Habitaciones' />
-        <Button as={NavLink} to={'crear'} size='sm' bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+        <Button as={NavLink} to={'crear'} size='sm' bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
               _hover={{
-                bg: 'purple.400',
+                bg: 'purpleC.400',
               }}>
           Crear habitación
         </Button>
@@ -144,7 +144,7 @@ const Rooms = () => {
                     px={2}
                     mr={2}
                     rounded={'full'}
-                    bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                   >
                     <Icon as={MdDelete} />
                   </Button>
@@ -154,7 +154,7 @@ const Rooms = () => {
                     state={{ room: room }}
                     px={2}
                     rounded={'full'}
-                    bg='purple.100' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                    bg='purple.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                   >
                     <Icon as={MdOutlineListAlt} />
                   </Button>

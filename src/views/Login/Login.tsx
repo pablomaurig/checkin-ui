@@ -168,7 +168,7 @@ const Login = () => {
                         mb={'5'}
                       >
                         <FormLabel htmlFor='email'> </FormLabel>
-                        <Input {...field} id='email' type='email' borderColor='purple.500' placeholder='Correo electrónico'/>
+                        <Input {...field} id='email' type='email' borderColor='purpleC.600' placeholder='Correo electrónico'/>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -182,7 +182,7 @@ const Login = () => {
                         mb={'5'}
                       >
                         <FormLabel htmlFor='password'> </FormLabel>
-                        <Input {...field} id='password' type='password' borderColor='purple.500' placeholder='Password'/>
+                        <Input {...field} id='password' type='password' borderColor='purpleC.600' placeholder='Password'/>
                         <FormErrorMessage>
                           {form.errors.password}
                         </FormErrorMessage>
@@ -198,14 +198,14 @@ const Login = () => {
                       <Button
                         variant={'link'}
                         onClick={handleToggleLogin}
-                        color='purple.500'
+                        color='purpleC.600'
                         fontSize={'13'}
                         fontWeight={'300'}
                       >
                         OLVIDÓ SU CONTRASEÑA?
                       </Button>
                       <Text fontSize={'13'} fontWeight={'300'}>
-                        <Link as={NavLink} to={'/registro'} color='purple.500'>
+                        <Link as={NavLink} to={'/registro'} color='purpleC.600'>
                           CREAR USUARIO
                         </Link>
                       </Text>
@@ -213,9 +213,9 @@ const Login = () => {
                     <Button
                       isLoading={props.isSubmitting}
                       type='submit'
-                      bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                      bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                       _hover={{
-                        bg: 'purple.400',
+                        bg: 'purpleC.400',
                       }}
                     >
                       INICIAR SESIÓN
@@ -244,7 +244,7 @@ const Login = () => {
                         mb={'5'}
                       >
                         <FormLabel htmlFor='email'> </FormLabel>
-                        <Input {...field} id='email' type='email' borderColor='purple.500' placeholder='Correo electrónico'/>
+                        <Input {...field} id='email' type='email' borderColor='purpleC.600' placeholder='Correo electrónico'/>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -258,7 +258,7 @@ const Login = () => {
                       <Button
                         variant={'link'}
                         onClick={handleToggleLogin}
-                        color='purple.500'
+                        color='purpleC.600'
                         fontSize={'sm'}
                         fontWeight={'300'}
                       >
@@ -268,9 +268,9 @@ const Login = () => {
                     <Button
                       isLoading={props.isSubmitting}
                       type='submit'
-                      bg='purple.200' color= 'purple.700' border='1px' borderColor = 'purple.500'
+                      bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                       _hover={{
-                        bg: 'purple.400',
+                        bg: 'purpleC.400',
                       }}
                     >
                       RECUPERAR CONTRASEÑA
