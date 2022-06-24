@@ -10,8 +10,8 @@ import {
   Button,
   Heading,
   Text,
-  useColorModeValue,
   useToast,
+  Image,
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
@@ -21,6 +21,8 @@ import { AuthContext } from '../../context/Auth.context';
 import * as Yup from 'yup';
 import { loginUser, resetPassword } from '../../services/auth.service';
 import { Permissions } from '../../types/user.types';
+import logo from '../../assets/visitar-logo.png';
+import bgImage from '../../assets/bg-image.jpg';
 
 // interface CustomizedState {
 //   from: {
@@ -123,20 +125,28 @@ const Login = () => {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      backgroundImage={`url(${bgImage})`} backgroundSize={'cover'}
     >
       <Stack spacing={8} mx={'auto'} maxW={'sm'} py={12} px={6} width={'lg'}>
-        <Stack align={'center'}>
-          <Heading fontSize={'2xl'}>
-            {isLogin ? 'Iniciar sesión' : 'Recuperar contraseña'}
-          </Heading>
-        </Stack>
         <Box
+          backgroundColor= 'rgba(253, 254, 254, 0.9)'
           rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
           boxShadow={'lg'}
           p={6}
         >
+        <Stack align={'center'} mb={5}>
+          <Link
+            as={NavLink}
+            to='/'
+            style={{ textDecoration: 'none' }}
+            _focus={{ boxShadow: 'none' }}
+          >
+            <Image src={logo} height='40px'/>
+          </Link>
+          <Heading fontSize={'20'}>
+            {isLogin ? 'INICIAR SESIÓN' : 'RECUPERAR CONTRASEÑA'}
+          </Heading>
+        </Stack>
           {isLogin ? (
             <Formik
               initialValues={{
@@ -157,10 +167,8 @@ const Login = () => {
                         isInvalid={form.errors.email && form.touched.email}
                         mb={'5'}
                       >
-                        <FormLabel htmlFor='email'>
-                          Correo electrónico
-                        </FormLabel>
-                        <Input {...field} id='email' type='email' />
+                        <FormLabel htmlFor='email'> </FormLabel>
+                        <Input {...field} id='email' type='email' borderColor='purpleC.600' placeholder='Correo electrónico'/>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -173,8 +181,8 @@ const Login = () => {
                         }
                         mb={'5'}
                       >
-                        <FormLabel htmlFor='password'>Contraseña</FormLabel>
-                        <Input {...field} id='password' type='password' />
+                        <FormLabel htmlFor='password'> </FormLabel>
+                        <Input {...field} id='password' type='password' borderColor='purpleC.600' placeholder='Password'/>
                         <FormErrorMessage>
                           {form.errors.password}
                         </FormErrorMessage>
@@ -184,34 +192,33 @@ const Login = () => {
                   <Stack spacing={10}>
                     <Stack
                       direction={{ base: 'column', sm: 'row' }}
-                      align={'start'}
+                      align={'center'}
                       justify={'space-between'}
                     >
                       <Button
                         variant={'link'}
                         onClick={handleToggleLogin}
-                        color={'blue.400'}
-                        fontSize={'sm'}
-                        fontWeight={'normal'}
+                        color='purpleC.600'
+                        fontSize={'13'}
+                        fontWeight={'300'}
                       >
-                        Olvidó su contraseña?
+                        OLVIDÓ SU CONTRASEÑA?
                       </Button>
-                      <Text fontSize={'sm'}>
-                        <Link as={NavLink} to={'/registro'} color={'blue.400'}>
-                          Crear nuevo usuario
+                      <Text fontSize={'13'} fontWeight={'300'}>
+                        <Link as={NavLink} to={'/registro'} color='purpleC.600'>
+                          CREAR USUARIO
                         </Link>
                       </Text>
                     </Stack>
                     <Button
                       isLoading={props.isSubmitting}
                       type='submit'
-                      bg={'blue.400'}
-                      color={'white'}
+                      bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                       _hover={{
-                        bg: 'blue.500',
+                        bg: 'purpleC.400',
                       }}
                     >
-                      Iniciar sesión
+                      INICIAR SESIÓN
                     </Button>
                   </Stack>
                 </Form>
@@ -236,10 +243,8 @@ const Login = () => {
                         isInvalid={form.errors.email && form.touched.email}
                         mb={'5'}
                       >
-                        <FormLabel htmlFor='email'>
-                          Correo electrónico
-                        </FormLabel>
-                        <Input {...field} id='email' type='email' />
+                        <FormLabel htmlFor='email'> </FormLabel>
+                        <Input {...field} id='email' type='email' borderColor='purpleC.600' placeholder='Correo electrónico'/>
                         <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                       </FormControl>
                     )}
@@ -247,29 +252,28 @@ const Login = () => {
                   <Stack spacing={10}>
                     <Stack
                       direction={{ base: 'column', sm: 'row' }}
-                      align={'start'}
-                      justify={'space-between'}
+                      align={'center'}
+                      justify={'center'}
                     >
                       <Button
                         variant={'link'}
                         onClick={handleToggleLogin}
-                        color={'blue.400'}
+                        color='purpleC.600'
                         fontSize={'sm'}
-                        fontWeight={'normal'}
+                        fontWeight={'300'}
                       >
-                        Iniciar sesión
+                        INICIAR SESIÓN
                       </Button>
                     </Stack>
                     <Button
                       isLoading={props.isSubmitting}
                       type='submit'
-                      bg={'blue.400'}
-                      color={'white'}
+                      bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
                       _hover={{
-                        bg: 'blue.500',
+                        bg: 'purpleC.400',
                       }}
                     >
-                      Recuperar contraseña
+                      RECUPERAR CONTRASEÑA
                     </Button>
                   </Stack>
                 </Form>

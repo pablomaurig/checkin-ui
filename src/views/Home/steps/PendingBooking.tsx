@@ -77,6 +77,7 @@ export const PendingBooking = ({ getBooking }: PendingBookingProps) => {
                 isLoading={props.isSubmitting}
                 type='submit'
                 width={'100%'}
+                bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
               >
                 Buscar reserva
               </Button>

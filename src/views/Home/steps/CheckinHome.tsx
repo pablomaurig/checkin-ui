@@ -25,6 +25,8 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { ImStarFull } from 'react-icons/im';
+import { MdOutlineLocationOn, MdOutlinePhone, MdOutlineFreeBreakfast, MdOutlineDining, 
+MdInfoOutline, MdFreeCancellation, MdSchedule, MdToday, MdWifi, MdPassword, MdOutlineListAlt, MdSingleBed, MdOutlineKingBed, MdOutlineRoomService } from 'react-icons/md';
 import { AuthContext } from '../../../context/Auth.context';
 import {
   createSurvey,
@@ -135,7 +137,7 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           </Box>
         </ModalBody>
         <ModalFooter justifyContent={'center'}>
-          <Button onClick={() => handleFinishSurvey(surveys)}>
+          <Button onClick={() => handleFinishSurvey(surveys)} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>
             Finalizar encuesta
           </Button>
         </ModalFooter>
@@ -185,106 +187,151 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
         flex={'1'}
       >
         <List spacing={2}>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          <Flex>
+          <Icon as={MdOutlineLocationOn} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'} >
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Dirección del hotel:{' '}
             </Text>
             Av. Libertador 1234, Buenos Aires
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
-              Teléfono recepción:{' '}
+          </Flex>
+          <Flex>
+          <Icon as={MdOutlinePhone} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'} >
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
+            Teléfono recepción:{' '}
             </Text>
-            54325432
+            +54 11 4444 4444
           </ListItem>
+          </Flex>
           <hr />
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          <Flex>
+          <Icon as={MdOutlineFreeBreakfast} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Horario desayuno:{' '}
             </Text>
             de 7hs a 10hs
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdOutlineDining} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Horario almuerzo:{' '}
             </Text>
             de 12hs a 14:30hs
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdOutlineDining} fontSize='16' mr={4}/>            
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Horario cena:{' '}
             </Text>
             de 20:30hs a 22:30hs
           </ListItem>
+          </Flex>
           <hr />
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          <Flex>
+          <Icon as={MdInfoOutline} fontSize='16' mr={4}/>            
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Número de reserva:{' '}
             </Text>
             {booking.bookingNumber}
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdOutlineRoomService} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Habitación:{' '}
             </Text>
             {booking.roomId
               ? booking.room?.name
               : 'No cuenta con habitación asignada aún'}
           </ListItem>
+          </Flex>
           {booking.roomId && (
-            <ListItem>
-              <Text as={'span'} fontWeight={'bold'}>
+            <Flex>
+               <Icon as={MdSingleBed} fontSize='16' mr={4}/>
+               <ListItem fontWeight={'200'}>
+              <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
                 Camas simples:{' '}
               </Text>
               {booking.room?.singleBeds}
             </ListItem>
+            </Flex>
           )}
           {booking.roomId && (
-            <ListItem>
-              <Text as={'span'} fontWeight={'bold'}>
+            <Flex>
+              <Icon as={MdOutlineKingBed} fontSize='16' mr={4}/>
+            <ListItem fontWeight={'200'}>
+              <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
                 Camas dobles:{' '}
               </Text>
               {booking.room?.doubleBeds}
             </ListItem>
+            </Flex>
           )}
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          <Flex>
+          <Icon as={MdWifi} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Red de Wifi:{' '}
             </Text>
             Hotel
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdPassword} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Contraseña de Wifi:{' '}
             </Text>
             123456
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdSchedule} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Horario de checkout:{' '}
             </Text>
             10:30hs
           </ListItem>
+          </Flex>
           <hr />
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          <Flex>
+          <Icon as={MdToday} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Fecha de ingreso:{' '}
             </Text>
             {new Date(booking.startDate).toLocaleDateString('es-AR')}
           </ListItem>
-          <ListItem>
-            <Text as={'span'} fontWeight={'bold'}>
+          </Flex>
+          <Flex>
+          <Icon as={MdFreeCancellation} fontSize='16' mr={4}/>
+          <ListItem fontWeight={'200'}>
+            <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
               Fecha de egreso:{' '}
             </Text>
             {new Date(booking.endDate).toLocaleDateString('es-AR')}
           </ListItem>
+          </Flex>
           {booking.roomId !== null && spents !== null && spents.length > 0 && (
             <>
-              <ListItem>
-                <Text as={'span'} fontWeight={'bold'}>
+              <Flex>
+              <Icon as={MdOutlineListAlt} fontSize='16' mr={4}/>
+              <ListItem fontWeight={'200'}>
+                <Text as={'span'} fontWeight={'400'} color= 'purple.800'>
                   Consumos durante la estadía:{' '}
                 </Text>
               </ListItem>
+              </Flex>
               <TableContainer>
                 <Table variant='simple' size='sm'>
                   <Thead>
@@ -315,7 +362,11 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           )}
         </List>
         {dayToday >= threeDaysBefore && (
-          <Button onClick={handleCheckout}>Realizar checkout</Button>
+          <Button onClick={handleCheckout} bg='purpleC.300' color= 'purpleC.700' border='1px' 
+          borderColor = 'purpleC.600'
+          _hover={{
+            bg: 'purpleC.400',
+          }}> Realizar Check-Out </Button>
         )}
         <Modal
           onClose={onSurveyClose}
@@ -342,14 +393,14 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
           <ModalOverlay />
           <ModalContent>
             <>
-              <ModalHeader>Realizar checkout</ModalHeader>
+              <ModalHeader>Realizar Check-Out</ModalHeader>
               <ModalBody>
                 <Text>
                   Para finalizar complete la siguiente encuesta de satisfacción
                 </Text>
               </ModalBody>
               <ModalFooter justifyContent={'center'}>
-                <Button onClick={handleSurvey}>Realizar encuesta</Button>
+                <Button onClick={handleSurvey} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>Realizar encuesta</Button>
               </ModalFooter>
             </>
           </ModalContent>
@@ -363,14 +414,14 @@ export const CheckinHome = ({ booking, spents }: CheckinHomeProps) => {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Checkout realizado con éxito</ModalHeader>
+            <ModalHeader>Check-Out realizado con éxito</ModalHeader>
             <ModalBody>
               <Text>
                 Por favor diríjase a recepción para finalizar su estadía.
               </Text>
             </ModalBody>
             <ModalFooter justifyContent={'center'}>
-              <Button onClick={onFinishClose}>Cerrar</Button>
+              <Button onClick={onFinishClose} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'>Cerrar</Button>
             </ModalFooter>
           </ModalContent>
         </Modal>

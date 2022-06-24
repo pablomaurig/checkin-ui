@@ -8,6 +8,7 @@ import {
   Link,
   Icon,
   Image,
+  Avatar,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { MdClose, MdMenu, MdOutlineLogout } from 'react-icons/md';
@@ -71,14 +72,17 @@ export default function Header({ onOpen, isOpen }: any) {
             spacing={6}
           >
             {user && (
-              <Button
-                onClick={() => {
-                  logout();
-                }}
-                variant={'link'}
-              >
-                <Icon as={MdOutlineLogout} />
-              </Button>
+              <Box>
+                <Avatar size='xs' />
+                <Button
+                  onClick={() => {
+                    logout();
+                  }}
+                  variant={'link'}
+                >
+                  <Icon as={MdOutlineLogout} fontSize='22'/>
+                </Button>
+              </Box>
             )}
           </Stack>
         </Flex>

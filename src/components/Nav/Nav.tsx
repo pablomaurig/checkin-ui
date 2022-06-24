@@ -14,9 +14,8 @@ import {
   Box,
 } from '@chakra-ui/react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { MdLogout, MdHotel } from 'react-icons/md';
+import { MdLogout, MdHotel, MdDateRange, MdTrendingUp, MdSettings, MdOutlineBedroomParent, MdPersonOutline } from 'react-icons/md';
 import { AiOutlineForm } from 'react-icons/ai';
-import { RiSettings5Fill } from 'react-icons/ri';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/Auth.context';
 import HasPermission from '../Auth/HasPermission';
@@ -52,32 +51,11 @@ const Nav = ({ isOpen, onClose }: any) => {
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}
           >
-            Checkin app
+            VisitAR
           </Link>
         </DrawerHeader>
         <DrawerBody px={'0'}>
-          <HasPermission requiredPermissions={[Permissions.customer]}>
-            <Link
-              as={NavLink}
-              to='/configuracion'
-              onClick={closeDrawer}
-              style={{ textDecoration: 'none' }}
-              _focus={{ boxShadow: 'none' }}
-            >
-              <Flex
-                align='center'
-                px={'5'}
-                py='1'
-                mx='0'
-                borderRadius='lg'
-                role='group'
-                cursor='pointer'
-              >
-                <Icon as={RiSettings5Fill} mr='4' fontSize='16' />
-                Configuración
-              </Flex>
-            </Link>
-          </HasPermission>
+
           <HasPermission requiredPermissions={[Permissions.customer]}>
             <Link
               as={NavLink}
@@ -118,7 +96,7 @@ const Nav = ({ isOpen, onClose }: any) => {
                 cursor='pointer'
               >
                 <Icon as={AiOutlineForm} mr='4' fontSize='16' />
-                Realizar checkin
+                Check-In
               </Flex>
             </Link>
           </HasPermission>
@@ -142,8 +120,8 @@ const Nav = ({ isOpen, onClose }: any) => {
                   role='group'
                   cursor='pointer'
                 >
-                  <Icon as={AiOutlineForm} mr='4' fontSize='16' />
-                  Próximos ingresos / Egresos
+                  <Icon as={MdDateRange} mr='4' fontSize='18' />
+                  Reservas
                 </Flex>
               </Link>
             </Box>
@@ -169,8 +147,8 @@ const Nav = ({ isOpen, onClose }: any) => {
                   role='group'
                   cursor='pointer'
                 >
-                  <Icon as={AiOutlineForm} mr='4' fontSize='16' />
-                  Encuesta de Satisfacción
+                  <Icon as={MdTrendingUp} mr='4' fontSize='18' />
+                  Encuestas de Satisfacción
                 </Flex>
               </Link>
             </Box>
@@ -188,8 +166,9 @@ const Nav = ({ isOpen, onClose }: any) => {
                 borderRadius='lg'
                 role='group'
                 cursor='pointer'
-                fontWeight='bold'
+                fontWeight='300'
               >
+                <Icon as={MdSettings} mr='4' fontSize='18' />
                 Configuraciones generales
               </Flex>
               <Box paddingLeft={10}>
@@ -216,7 +195,7 @@ const Nav = ({ isOpen, onClose }: any) => {
                         role='group'
                         cursor='pointer'
                       >
-                        <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                        <Icon as={MdOutlineBedroomParent} mr='4' fontSize='18' />
                         Habitaciones
                       </Flex>
                     </Link>
@@ -241,7 +220,7 @@ const Nav = ({ isOpen, onClose }: any) => {
                         role='group'
                         cursor='pointer'
                       >
-                        <Icon as={AiOutlineForm} mr='4' fontSize='16' />
+                        <Icon as={MdPersonOutline} mr='4' fontSize='18' />
                         Empleados
                       </Flex>
                     </Link>

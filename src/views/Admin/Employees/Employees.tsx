@@ -101,7 +101,10 @@ const Employees = () => {
     <>
       <Flex justifyContent={'space-between'} mb={'4'}>
         <PageTitle label='Empleados' />
-        <Button as={NavLink} to={'crear'} size='sm' title={'Alta de empleado'}>
+        <Button as={NavLink} to={'crear'} size='sm' title={'Alta de empleado'} bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+              _hover={{
+                bg: 'purpleC.400',
+              }}>        
           Alta de empleado
         </Button>
       </Flex>
@@ -141,6 +144,10 @@ const Employees = () => {
                     px={2}
                     rounded={'full'}
                     title={'Eliminar'}
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                      _hover={{
+                        bg: 'purpleC.200',
+                      }}
                   >
                     <Icon as={MdDelete} />
                   </Button>
@@ -152,6 +159,10 @@ const Employees = () => {
                     px={2}
                     rounded={'full'}
                     title={'Ver detalles'}
+                    bg='purpleC.100' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+                    _hover={{
+                      bg: 'purpleC.200',
+                    }}
                   >
                     <Icon as={MdOutlineListAlt} />
                   </Button>

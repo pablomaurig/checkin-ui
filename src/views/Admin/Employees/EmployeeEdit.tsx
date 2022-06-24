@@ -169,7 +169,10 @@ const EmployeeEdit = () => {
             )}
           </Field> */}
           <ButtonGroup mt={4} alignItems={'center'}>
-            <Button isLoading={props.isSubmitting} type='submit'>
+            <Button isLoading={props.isSubmitting} type='submit' bg='purpleC.300' color= 'purpleC.700' border='1px' borderColor = 'purpleC.600'
+              _hover={{
+                bg: 'purpleC.400',
+              }}>            
               Submit
             </Button>
             <Link as={NavLink} to={'../empleados'}>
